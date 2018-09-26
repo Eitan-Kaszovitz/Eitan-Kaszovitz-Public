@@ -1,5 +1,5 @@
 
-package	edu.yu.intro;
+package edu.yu.intro;
 
 public class HelloWorldVariables {
 	public static void main (final String [] args) {
