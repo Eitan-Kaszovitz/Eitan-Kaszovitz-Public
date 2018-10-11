@@ -17,25 +17,17 @@ public class OneEmployeePay {
 		float a = net/h;
 		System.out.println("************************************************** ");
 		System.out.println("INPUT ... ");
-		System.out.printf("%-20s ", "Employee ID:");
-		System.out.printf("%s%n", n);
-		System.out.printf("%-20s ", "Hours Worked:");
-		System.out.printf("%.2f%n", h);
-		System.out.printf("%-20s ", "Wage Rate:"); 
-		System.out.printf("%.2f%n", r);
-		System.out.printf("%-20s ", "Deductions:");
-		System.out.println(c);
+		System.out.printf("%-20s %s%n", "Employee ID:", n);
+		System.out.printf("%-20s %.2f%n", "Hours Worked:", h);
+		System.out.printf("%-20s %.2f%n", "Wage Rate:", r); 
+		System.out.printf("%-20s %d%n", "Deductions:", c);
 		System.out.println();
 		System.out.println();
 		System.out.println("OUTPUT ... ");
-		System.out.printf("%-20s ", "Gross Pay:");
-		System.out.printf("%.2f%n", g);
-		System.out.printf("%-20s ", "Taxes:");
-		System.out.printf("%.2f%n", t);
-		System.out.printf("%-20s ", "Net pay:");
-		System.out.printf("%.2f%n", net);
-		System.out.printf("%-20s ", "Average pay:");
-		System.out.printf("%.2f%n", a);
+		System.out.printf("%-20s %.2f%n", "Gross Pay:", g);
+		System.out.printf("%-20s %.2f%n", "Taxes:", t);
+		System.out.printf("%-20s %.2f%n", "Net pay:", net);
+		System.out.printf("%-20s %.2f%n", "Average pay:", a);
 		System.out.println("************************************************** ");
 	}
 }
