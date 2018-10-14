@@ -1,0 +1,2 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+Enter temperature in Celsius: 40.0 C = 104.0 F 
