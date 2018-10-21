@@ -1,0 +1,15 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+Enter employeeId, hrsWorked, wageRate, deductions: ************************************************** 
+INPUT ... 
+Employee ID:         "x-2384"
+Hours Worked:        40.00
+Wage Rate:           5.00
+Deductions:          5
+
+
+OUTPUT ... 
+Gross Pay:           200.00
+Taxes:               30.00
+Net pay:             155.00
+Average pay:         3.88
+************************************************** 
