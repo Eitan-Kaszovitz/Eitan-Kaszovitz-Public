@@ -1,0 +1,6 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+I’m thinking of a number between 1 and 100
+(inclusive). Can you guess what number it is?
+Please type a number: You Guessed 42
+I was thinking of 40
+You were off by: 2
