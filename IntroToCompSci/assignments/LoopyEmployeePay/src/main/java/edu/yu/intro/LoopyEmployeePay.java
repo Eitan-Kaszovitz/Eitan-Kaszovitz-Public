@@ -3,7 +3,6 @@ package	edu.yu.intro;
 
 import java.util.Scanner;
 import java.io.*;
-import java.util.NoSuchElementException;
 
 public class LoopyEmployeePay {	
 	public static void main (final String [] args) throws FileNotFoundException {
