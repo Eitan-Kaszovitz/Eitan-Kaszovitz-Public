@@ -1,0 +1,68 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+
+Nice!
+
+
+"x-2384" 40.0 20.0 40
+Enter employeeId, hrsWorked, wageRate, deductions: ************************************************** 
+INPUT ... 
+Employee ID:         "x-2384"
+Hours Worked:        40.00
+Wage Rate:           20.00
+Deductions:          40
+
+
+error: deductions must be between 0 and 35
+
+
+"x-2384" 0.8 20.0 10
+Enter employeeId, hrsWorked, wageRate, deductions: ************************************************** 
+INPUT ... 
+Employee ID:         "x-2384"
+Hours Worked:        0.80
+Wage Rate:           20.00
+Deductions:          10
+
+
+error: hours worked must be at least 1
+
+
+"x-2384" 1.0 15.0 30
+Enter employeeId, hrsWorked, wageRate, deductions: ************************************************** 
+INPUT ... 
+Employee ID:         "x-2384"
+Hours Worked:        1.00
+Wage Rate:           15.00
+Deductions:          30
+
+
+error: Net pay would be negative
+
+
+"x-2384" 40.0 14.0 10
+Enter employeeId, hrsWorked, wageRate, deductions: ************************************************** 
+INPUT ... 
+Employee ID:         "x-2384"
+Hours Worked:        40.00
+Wage Rate:           14.00
+Deductions:          10
+
+
+error: wage rate must be at least 15
+
+
+"x-2384" 40.0 20.0 10
+Enter employeeId, hrsWorked, wageRate, deductions: ************************************************** 
+INPUT ... 
+Employee ID:         "x-2384"
+Hours Worked:        40.00
+Wage Rate:           20.00
+Deductions:          10
+
+
+OUTPUT ... 
+Gross Pay:           800.00
+Taxes:               120.00
+Net pay:             630.00
+Average pay:         15.75
+************************************************** 
