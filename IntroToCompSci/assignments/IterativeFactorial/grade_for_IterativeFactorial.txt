@@ -1,0 +1,14 @@
+Grade for assignment [KaszovitzEitan]: 4/10
+
+
+15
+Enter ‘n‘ -- I will calculate ‘factorial(n)‘: factorial(15) = 2004310016
+ 
+
+20
+Enter ‘n‘ -- I will calculate ‘factorial(n)‘: factorial(20) = -2102132736
+ 
+
+5
+Enter ‘n‘ -- I will calculate ‘factorial(n)‘: factorial(5) = 120
+ 
