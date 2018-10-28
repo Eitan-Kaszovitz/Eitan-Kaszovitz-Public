@@ -1,0 +1,55 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+Fermat Last Theorem checker: Enter (integers) ’a’, ’b’, ’c’, ’n’: ************************************************** 
+INPUT ... 
+    a: 3.000000
+    b: 4.000000
+    c: 7.000000
+(coeffecient n): 2.000000
+
+
+OUTPUT ... 
+Evaluating 9 + 16 ==? 49: false
+The sums are not equal but irrelevant to Fermat’s theorem which applies to n > 2
+************************************************** 
+Fermat Last Theorem checker: Enter (integers) ’a’, ’b’, ’c’, ’n’: ************************************************** 
+INPUT ... 
+    a: 3.000000
+    b: 4.000000
+    c: 5.000000
+(coeffecient n): 2.000000
+
+
+OUTPUT ... 
+Evaluating 9 + 16 ==? 25: true
+The sums are equal but irrelevant to Fermat’s theorem which applies only to n > 2
+************************************************** 
+Fermat Last Theorem checker: Enter (integers) ’a’, ’b’, ’c’, ’n’: ************************************************** 
+INPUT ... 
+    a: 2.000000
+    b: -3.000000
+    c: 4.000000
+(coeffecient n): 5.000000
+
+
+error: all input parameters must be positive integers
+Fermat Last Theorem checker: Enter (integers) ’a’, ’b’, ’c’, ’n’: ************************************************** 
+INPUT ... 
+    a: 2.000000
+    b: 3.000000
+    c: 4.300000
+(coeffecient n): 5.000000
+
+
+error: program requires integer input: you supplied 4.3
+Fermat Last Theorem checker: Enter (integers) ’a’, ’b’, ’c’, ’n’: ************************************************** 
+INPUT ... 
+    a: 2.000000
+    b: 3.000000
+    c: 4.000000
+(coeffecient n): 5.000000
+
+
+OUTPUT ... 
+Evaluating 32 + 243 ==? 1024: false
+Hmm ... you haven’t disproved Fermat’s theorem yet.
+************************************************** 
