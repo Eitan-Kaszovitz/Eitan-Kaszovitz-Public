@@ -1,0 +1,22 @@
+Grade for assignment [KaszovitzEitan]: 10/10 (Nice!)
+
+
+                  Id  Gross Pay       Taxes     Net Pay     Average Pay
+Problem at line # 1: ’hrs worked’ must be at least 1 -- but found -20.5
+Problem at line # 1: Net pay must be positive -- but found -1652.6799
+Problem at line # 2: deductions must be between 0 and 35 -- but found 0
+                00003 3208.00        481.20     2542.40         63.56
+                00004 2568.42        385.26     2034.74         59.50
+                00005 6435.24        965.29     5114.19         78.44
+Problem at line # 6: ’hrs worked’ must be at least 1 -- but found 0.5
+Problem at line # 7: deductions must be between 0 and 35 -- but found -2
+Problem at line # 8: deductions must be between 0 and 35 -- but found 38
+Problem at line # 9: Net pay must be positive -- but found -10.0
+                00010 3368.40        505.26     2670.72         63.59
+Problem at line # 11: 'wage rate' must be at least 15 -- but found 14.95
+Problem at line # 11: deductions must be between 0 and 35 -- but found 38
+
+                    Total Gross Pay:  15580.06
+                        Total Taxes:  2337.01
+    Employee with Largest Gross Pay:  00005
+************************************************** 
