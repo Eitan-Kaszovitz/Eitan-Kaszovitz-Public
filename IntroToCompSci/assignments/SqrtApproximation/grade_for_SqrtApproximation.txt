@@ -1,0 +1,19 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+
+
+72.0
+Enter ‘a‘ -- I will approximate ‘sqrt(a)‘: 
+*************************************************
+sqrt(72.000000) = 8.485 after 6 iteration(s): [difference from Math.sqrt= 1.50990e-13]
+*************************************************
+
+
+-3
+Enter ‘a‘ -- I will approximate ‘sqrt(a)‘: error: input must be positive and above relative zero
+
+
+0.01
+Enter ‘a‘ -- I will approximate ‘sqrt(a)‘: 
+*************************************************
+sqrt(0.010000) = 0.100 after 8 iteration(s): [difference from Math.sqrt= 5.06410e-12]
+*************************************************
