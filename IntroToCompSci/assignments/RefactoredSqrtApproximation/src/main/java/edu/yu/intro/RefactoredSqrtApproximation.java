@@ -27,6 +27,9 @@ public class RefactoredSqrtApproximation {
 	
 	public static double[] calculateSquareRoots (int n) {
 		int number = n;
+		if (number < 0) {
+			throw new IllegalArgumentException();
+		}
 		double[] sqrtArray = new double [number];
 		for (int i = 0; i < number; i++){
 			sqrtArray[i] = sqrt(i);
@@ -37,6 +40,9 @@ public class RefactoredSqrtApproximation {
 	
 	public static double sqrt (double a) {
 		double number = a;
+		if (number < 0) {
+			throw new IllegalArgumentException();
+		}
 		
 		double FirstGuess = number / 2;
 		double NextGuess = number / 2.1;
