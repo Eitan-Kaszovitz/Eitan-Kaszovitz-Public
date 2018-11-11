@@ -1,0 +1,24 @@
+Grade for assignment [KaszovitzEitan]: 10/10 (nice!)
+
+                  Id  Gross Pay       Taxes     Net Pay     Average Pay
+                00001 3208.00        481.20     2542.40         63.56
+                00002 2568.42        385.26     2034.74         59.50
+                00003 6435.24        965.29     5114.19         78.44
+Problem at line # 4: ’hrs worked’ must be at least 1 -- but found 0.5
+Problem at line # 5: ’hrs worked’ must be at least 1 -- but found -20.5
+Problem at line # 5: Net pay must be positive -- but found -1652.6799
+Problem at line # 6: deductions must be between 0 and 35 -- but found -2
+Problem at line # 7: deductions must be between 0 and 35 -- but found 38
+Problem at line # 8: Net pay must be positive -- but found -10.0
+                00009 3368.40        505.26     2670.72         63.59
+Problem at line # 10: Could not parse Hrs Worked ["42.0"] into valid input
+Problem at line # 11: Could not parse Wage Rate ["80.2"] into valid input
+Problem at line # 12: Could not parse Deductions ["24"] into valid input
+Problem at line # 13: Could not parse Deductions [24.0] into valid input
+Problem at line # 14: Expected 4 tokens per line, found 6. Discarding input & advancing
+                00015 3208.00        481.20     2542.40         63.56
+
+                    Total Gross Pay:  18788.06
+                        Total Taxes:  2818.21
+    Employee with Largest Gross Pay:  00003
+************************************************** 
