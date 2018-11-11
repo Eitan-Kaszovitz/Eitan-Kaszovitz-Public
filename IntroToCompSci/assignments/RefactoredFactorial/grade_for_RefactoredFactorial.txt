@@ -1,0 +1,37 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/RefactoredFactorial
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 2
+Running edu.yu.intro.test.RefactoredFactorialSuiteTest
+Execution Started : test[0: factorial(0)=1]
+Execution Finished : test[0: factorial(0)=1]
+Execution Started : test[1: factorial(10)=3,628,800]
+Execution Finished : test[1: factorial(10)=3,628,800]
+Execution Started : test[2: factorial(15)=1,307,674,368,000]
+Execution Finished : test[2: factorial(15)=1,307,674,368,000]
+Execution Started : test[3: factorial(20)=2,432,902,008,176,640,000]
+Execution Finished : test[3: factorial(20)=2,432,902,008,176,640,000]
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 sec - in edu.yu.intro.test.RefactoredFactorialSuiteTest
+Running edu.yu.intro.test.RefactoredFactorialTest
+Execution Started : negativeInputRejected
+Execution Finished : negativeInputRejected
+Execution Started : factorial10
+Execution Finished : factorial10
+Execution Started : factorial40
+Execution Finished : factorial40
+Execution Started : factorial15Wiki
+Execution Finished : factorial15Wiki
+Execution Started : factorial20Wiki
+Execution Finished : factorial20Wiki
+Execution Started : factorial0
+Execution Finished : factorial0
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in edu.yu.intro.test.RefactoredFactorialTest
+Test cases executed : 10
+
+Results :
+
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+
