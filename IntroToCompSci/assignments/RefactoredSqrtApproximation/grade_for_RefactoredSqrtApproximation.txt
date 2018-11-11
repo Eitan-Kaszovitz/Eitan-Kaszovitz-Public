@@ -1,0 +1,55 @@
+Grade for assignment [KaszovitzEitan]: 8/10
+
+Please work with your TA to see what you need to fix: my guess that
+it's an array indexing problem ("off by one")
+
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/RefactoredSqrtApproximation
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 1
+Running edu.yu.intro.test.SqrtApproximationTest
+Execution Started : calculateSquareRootsInputCantBeNegative
+Execution Finished : calculateSquareRootsInputCantBeNegative
+Execution Started : calculateSquareRootsMinimalLength
+Execution Failure : java.lang.AssertionError: input='0': array lengths differed, expected.length=1 actual.length=0
+Execution Finished : calculateSquareRootsMinimalLength
+Execution Started : calculateSquareRootsHappyPaths
+Execution Failure : java.lang.AssertionError: input='5': array lengths differed, expected.length=6 actual.length=5
+Execution Finished : calculateSquareRootsHappyPaths
+Execution Started : sqrt0
+Execution Finished : sqrt0
+Execution Started : sqrt2
+Execution Finished : sqrt2
+Execution Started : sqrtRootCalculationInputCantBeNegative
+Execution Finished : sqrtRootCalculationInputCantBeNegative
+Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.046 sec <<< FAILURE! - in edu.yu.intro.test.SqrtApproximationTest
+calculateSquareRootsMinimalLength(edu.yu.intro.test.SqrtApproximationTest)  Time elapsed: 0.004 sec  <<< FAILURE!
+java.lang.AssertionError: input='0': array lengths differed, expected.length=1 actual.length=0
+	at edu.yu.intro.test.SqrtApproximationTest.calculateSquareRootsMinimalLength(SqrtApproximationTest.java:38)
+
+calculateSquareRootsHappyPaths(edu.yu.intro.test.SqrtApproximationTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: input='5': array lengths differed, expected.length=6 actual.length=5
+	at edu.yu.intro.test.SqrtApproximationTest.calculateSquareRootsHappyPaths(SqrtApproximationTest.java:45)
+
+Test cases executed : 6
+
+Results :
+
+Failed tests: 
+  SqrtApproximationTest.calculateSquareRootsHappyPaths:45 input='5': array lengths differed, expected.length=6 actual.length=5
+  SqrtApproximationTest.calculateSquareRootsMinimalLength:38 input='0': array lengths differed, expected.length=1 actual.length=0
+
+Tests run: 6, Failures: 2, Errors: 0, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project RefactoredSqrtApproximation: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/RefactoredSqrtApproximation/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
