@@ -1,0 +1,37 @@
+Grade for assignment [KaszovitzEitan]: 10/10 (nice)
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/AckermannFn
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 2
+Running edu.yu.intro.methods.test.AckermannTest
+Execution Started : test0_0
+Execution Finished : test0_0
+Execution Started : test0_4
+Execution Finished : test0_4
+Execution Started : test2_1
+Execution Finished : test2_1
+Execution Started : test2_4
+Execution Finished : test2_4
+Execution Started : test3_2
+Execution Finished : test3_2
+Execution Started : test3_3
+Execution Finished : test3_3
+Execution Started : test4_0
+Execution Finished : test4_0
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 sec - in edu.yu.intro.methods.test.AckermannTest
+Running edu.yu.intro.test.AckermannFnTest
+Execution Started : Ackermann0and4
+Execution Finished : Ackermann0and4
+Execution Started : Ackermann1and2
+Execution Finished : Ackermann1and2
+Execution Started : Ackermann2and2
+Execution Finished : Ackermann2and2
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in edu.yu.intro.test.AckermannFnTest
+Test cases executed : 10
+
+Results :
+
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+
