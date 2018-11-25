@@ -1,0 +1,70 @@
+Grade for assignment [KaszovitzEitan]: 9/10
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/RationalNumbers
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 1
+Running edu.yu.intro.test.RationalTest
+Execution Started : testIllegalInvert
+Execution Finished : testIllegalInvert
+Execution Started : testToDouble
+[INFO ] 2018-11-21 20:11:17.836 [main] RationalTest testToDouble - rational(3, 6) = edu.yu.intro.Rational@5d47c63f
+[INFO ] 2018-11-21 20:11:17.837 [main] RationalTest testToDouble - toDouble=0.5
+Execution Finished : testToDouble
+Execution Started : testAdd
+[INFO ] 2018-11-21 20:11:17.838 [main] RationalTest testAdd - rational(2, 50)=edu.yu.intro.Rational@568bf312
+[INFO ] 2018-11-21 20:11:17.838 [main] RationalTest testAdd - rational(5, 10)=edu.yu.intro.Rational@ca263c2
+[INFO ] 2018-11-21 20:11:17.839 [main] RationalTest testAdd - sum=edu.yu.intro.Rational@589b3632
+Execution Finished : testAdd
+Execution Started : testCtor
+[INFO ] 2018-11-21 20:11:17.839 [main] RationalTest testCtor - rational(3, 6) = edu.yu.intro.Rational@45f45fa1
+Execution Finished : testCtor
+Execution Started : testNoArgCtor
+[INFO ] 2018-11-21 20:11:17.840 [main] RationalTest testNoArgCtor - rational = edu.yu.intro.Rational@4c6e276e
+Execution Finished : testNoArgCtor
+Execution Started : testNegateNegate
+[INFO ] 2018-11-21 20:11:17.840 [main] RationalTest testNegateNegate - rational(-3, 6) = edu.yu.intro.Rational@534df152
+[INFO ] 2018-11-21 20:11:17.841 [main] RationalTest testNegateNegate - negated=edu.yu.intro.Rational@534df152
+Execution Finished : testNegateNegate
+Execution Started : zeroCannotBeReduced
+Execution Failure : java.lang.ArithmeticException: / by zero
+Execution Finished : zeroCannotBeReduced
+Execution Started : testInvert
+[INFO ] 2018-11-21 20:11:17.844 [main] RationalTest testInvert - rational(3, 6) = edu.yu.intro.Rational@1f1c7bf6
+[INFO ] 2018-11-21 20:11:17.845 [main] RationalTest testInvert - inverted=edu.yu.intro.Rational@1f1c7bf6
+Execution Finished : testInvert
+Execution Started : testNegate
+[INFO ] 2018-11-21 20:11:17.845 [main] RationalTest testNegate - rational(3, 6) = edu.yu.intro.Rational@25b485ba
+[INFO ] 2018-11-21 20:11:17.846 [main] RationalTest testNegate - negated=edu.yu.intro.Rational@25b485ba
+Execution Finished : testNegate
+Execution Started : testZeroDenominator
+Execution Finished : testZeroDenominator
+Execution Started : testReduce
+[INFO ] 2018-11-21 20:11:17.847 [main] RationalTest testReduce - rational(24, 36)=edu.yu.intro.Rational@2b546384
+[INFO ] 2018-11-21 20:11:17.847 [main] RationalTest testReduce - reduced=edu.yu.intro.Rational@5d740a0f
+Execution Finished : testReduce
+Tests run: 11, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.381 sec <<< FAILURE! - in edu.yu.intro.test.RationalTest
+zeroCannotBeReduced(edu.yu.intro.test.RationalTest)  Time elapsed: 0.004 sec  <<< ERROR!
+java.lang.ArithmeticException: / by zero
+	at edu.yu.intro.test.RationalTest.zeroCannotBeReduced(RationalTest.java:119)
+
+Test cases executed : 11
+
+Results :
+
+Tests in error: 
+  RationalTest.zeroCannotBeReduced:119 » Arithmetic / by zero
+
+Tests run: 11, Failures: 0, Errors: 1, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project RationalNumbers: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/RationalNumbers/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
