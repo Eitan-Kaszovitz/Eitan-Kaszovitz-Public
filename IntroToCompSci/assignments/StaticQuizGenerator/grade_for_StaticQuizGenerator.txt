@@ -1,0 +1,34 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/StaticQuizGenerator
+Question 1: What is 43 + 87? Question 2: What is 21 + 58? Question 3: What is 1 + 41? Question 4: What is 72 + 19? Question 5: What is 1 + 33? Question 6: What is 35 + 56? Question 7: What is 36 + 71? Question 8: What is 64 + 48? Question 9: What is 93 + 65? Question 10: What is 22 + 77? 
+Here are the correct answers:
+Question 1: 43 + 87 = 130. You said 2, which is INCORRECT.
+Question 2: 21 + 58 = 79. You said 4, which is INCORRECT.
+Question 3: 1 + 41 = 42. You said 6, which is INCORRECT.
+Question 4: 72 + 19 = 91. You said 8, which is INCORRECT.
+Question 5: 1 + 33 = 34. You said 10, which is INCORRECT.
+Question 6: 35 + 56 = 91. You said 12, which is INCORRECT.
+Question 7: 36 + 71 = 107. You said 14, which is INCORRECT.
+Question 8: 64 + 48 = 112. You said 16, which is INCORRECT.
+Question 9: 93 + 65 = 158. You said 18, which is INCORRECT.
+Question 10: 22 + 77 = 99. You said 20, which is INCORRECT.
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 1
+Running edu.yu.intro.test.StaticQuizGeneratorTest
+Execution Started : runDoIt
+[INFO ] 2018-11-19 20:04:24.915 [main] StaticQuizGeneratorTest doIt - Invoking 'createQuiz()'
+[INFO ] 2018-11-19 20:04:24.918 [main] StaticQuizGeneratorTest doIt - Filling in my answers
+[INFO ] 2018-11-19 20:04:24.918 [main] StaticQuizGeneratorTest doIt - Invoking 'gradeQuiz()'
+[INFO ] 2018-11-19 20:04:24.918 [main] StaticQuizGeneratorTest doIt - Testing results of gradeQuiz(): first answer is wrong, others are correct
+[INFO ] 2018-11-19 20:04:24.919 [main] StaticQuizGeneratorTest runDoIt - Finished running the test
+Execution Finished : runDoIt
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.368 sec - in edu.yu.intro.test.StaticQuizGeneratorTest
+Test cases executed : 1
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
