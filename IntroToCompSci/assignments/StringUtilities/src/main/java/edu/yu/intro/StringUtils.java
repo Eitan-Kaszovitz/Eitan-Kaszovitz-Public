@@ -67,11 +67,10 @@ public class StringUtils {
 		if (s == null) {
 			throw new IllegalArgumentException();
 		}
-		String noSpaces = s.replaceAll("\\s", "").toString();
-		StringBuilder sb = new StringBuilder(noSpaces);
+		StringBuilder sb = new StringBuilder(s);
 		String reverseString = sb.reverse().toString();
 		boolean status = false;
-		if (reverseString.equals(noSpaces)) {
+		if (reverseString.equals(s)) {
 			status = true;
 		}
 		return status;
