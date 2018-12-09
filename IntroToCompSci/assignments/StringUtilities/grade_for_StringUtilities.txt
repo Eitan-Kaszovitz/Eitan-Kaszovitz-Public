@@ -1,0 +1,123 @@
+Grade for assignment [KaszovitzEitan]: 9.5/10
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/StringUtilities
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 1
+Running edu.yu.intro.test.StringUtilsTest
+Execution Started : spacesAreTrimmedUntilEmpty
+Execution Finished : spacesAreTrimmedUntilEmpty
+Execution Started : vanillaJoin
+Execution Finished : vanillaJoin
+Execution Started : joinedEmptyArrayIsEmptyString
+Execution Finished : joinedEmptyArrayIsEmptyString
+Execution Started : joinedArrayContainingNullIsEmptyString
+Execution Finished : joinedArrayContainingNullIsEmptyString
+Execution Started : illegalToTestPalindromityOnNull
+Execution Finished : illegalToTestPalindromityOnNull
+Execution Started : trailingSpacesAreTrimmed
+Execution Finished : trailingSpacesAreTrimmed
+Execution Started : vanillaRemoveSucceeds
+Execution Finished : vanillaRemoveSucceeds
+Execution Started : illegalToExtractExtensionOnNullInput
+Execution Finished : illegalToExtractExtensionOnNullInput
+Execution Started : NullIsNotEqualToABC
+Execution Finished : NullIsNotEqualToABC
+Execution Started : testVanillaExtractExtension
+Execution Finished : testVanillaExtractExtension
+Execution Started : ignoreWhenAlreadyThatLong
+Execution Finished : ignoreWhenAlreadyThatLong
+Execution Started : ABCNotEqualToNull
+Execution Finished : ABCNotEqualToNull
+Execution Started : nullIsBlank
+Execution Finished : nullIsBlank
+Execution Started : trimmedEmptyIsEmpty
+Execution Finished : trimmedEmptyIsEmpty
+Execution Started : spaceIsNotEmpty
+Execution Finished : spaceIsNotEmpty
+Execution Started : ABCEqualsABC
+Execution Finished : ABCEqualsABC
+Execution Started : testVanillaLeftPad
+Execution Finished : testVanillaLeftPad
+Execution Started : removeDoesntRemoveWhatDoesntExist
+Execution Finished : removeDoesntRemoveWhatDoesntExist
+Execution Started : nullAndEmptyAreBothEmpty
+Execution Finished : nullAndEmptyAreBothEmpty
+Execution Started : nonStringsAreIncludedInJoin
+Execution Finished : nonStringsAreIncludedInJoin
+Execution Started : padTruncatedWhenTooBig
+Execution Finished : padTruncatedWhenTooBig
+Execution Started : testIsPalindrome
+Execution Finished : testIsPalindrome
+Execution Started : illegalToJoinNull
+Execution Finished : illegalToJoinNull
+Execution Started : withNoDotInInputExtractExtensionReturnsEmptyString
+Execution Finished : withNoDotInInputExtractExtensionReturnsEmptyString
+Execution Started : cantRemoveFromEmpty
+Execution Finished : cantRemoveFromEmpty
+Execution Started : charsArentTrimmed
+Execution Finished : charsArentTrimmed
+Execution Started : TwoNullsAreEquals
+Execution Finished : TwoNullsAreEquals
+Execution Started : stringWithEmbeddedSpacesAndVanillaCharsIsNotEmpty
+Execution Finished : stringWithEmbeddedSpacesAndVanillaCharsIsNotEmpty
+Execution Started : ignoreWhenPadIsNegative
+Execution Finished : ignoreWhenPadIsNegative
+Execution Started : abcNotEqualToABC
+Execution Finished : abcNotEqualToABC
+Execution Started : okToExtractExtensionFromFilenameWithEmbeddedSpaces
+Execution Failure : org.junit.ComparisonFailure: expected:<[ ]txt> but was:<[]txt>
+Execution Finished : okToExtractExtensionFromFilenameWithEmbeddedSpaces
+Execution Started : illegalToExtractExtensionWithMultipleDotsInInput
+Execution Finished : illegalToExtractExtensionWithMultipleDotsInInput
+Execution Started : leadingSpacesAreTrimmed
+Execution Finished : leadingSpacesAreTrimmed
+Execution Started : trimmedNullIsEmpty
+Execution Finished : trimmedNullIsEmpty
+Execution Started : cantRemoveFromNull
+Execution Finished : cantRemoveFromNull
+Execution Started : leadingAndTrailingSpacesAreTrimmed
+Execution Finished : leadingAndTrailingSpacesAreTrimmed
+Execution Started : spaceIsBlank
+Execution Finished : spaceIsBlank
+Execution Started : nullCantBeLeftPadded
+Execution Finished : nullCantBeLeftPadded
+Execution Started : emptyCanBeLeftPadded
+Execution Finished : emptyCanBeLeftPadded
+Execution Started : ignoreWhenPadShorterThanString
+Execution Finished : ignoreWhenPadShorterThanString
+Execution Started : nullAndEmptyStringsAreIgnoredInJoin
+Execution Finished : nullAndEmptyStringsAreIgnoredInJoin
+Execution Started : emptyIsBlank
+Execution Finished : emptyIsBlank
+Execution Started : stringWithVanillaCharsIsntBlank
+Execution Finished : stringWithVanillaCharsIsntBlank
+Execution Started : embeddedSpacesAreNotTrimmed
+Execution Finished : embeddedSpacesAreNotTrimmed
+Execution Started : stringWithVanillaCharsIsNotEmpty
+Execution Finished : stringWithVanillaCharsIsNotEmpty
+Tests run: 45, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.384 sec <<< FAILURE! - in edu.yu.intro.test.StringUtilsTest
+okToExtractExtensionFromFilenameWithEmbeddedSpaces(edu.yu.intro.test.StringUtilsTest)  Time elapsed: 0.005 sec  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[ ]txt> but was:<[]txt>
+	at edu.yu.intro.test.StringUtilsTest.okToExtractExtensionFromFilenameWithEmbeddedSpaces(StringUtilsTest.java:56)
+
+Test cases executed : 45
+
+Results :
+
+Failed tests: 
+  StringUtilsTest.okToExtractExtensionFromFilenameWithEmbeddedSpaces:56 expected:<[ ]txt> but was:<[]txt>
+
+Tests run: 45, Failures: 1, Errors: 0, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project StringUtilities: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/StringUtilities/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
