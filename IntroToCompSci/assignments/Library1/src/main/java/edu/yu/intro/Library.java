@@ -8,7 +8,7 @@ public class Library {
 	private String name;
 	private String address;
 	private String phone;
-	private ArrayList <Book> holdings = new ArrayList<>(10);
+	private List <Book> holdings = new ArrayList<>(10);
 
 	/////Constructor
 	public Library(String name, String address, String phone){
@@ -40,17 +40,20 @@ public class Library {
         if (o == this) {
         return true;
         }
-        if (!(o instanceof Library)) {
+        if (o == null) {
+        	return false;
+        }
+        if (getClass() != o.getClass()) {
             return false;
         }
         
         Library library = (Library) o;
-        return Objects.equals(name, library.name) && Objects.equals(address, library.address) && Objects.equals(phone, library.phone);
+        return Objects.equals(name, library.getName()); 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, address, phone);
+        return Objects.hash(name);
     }
 	
 	
@@ -63,7 +66,7 @@ public class Library {
 		if ((title == null) || (title.length() == 0)) {
 			throw new IllegalArgumentException();
 		}
-		ArrayList <String> titles = new ArrayList<String>(10);
+		List <String> titles = new ArrayList<String>(10);
 		for (int x = 0; x < holdings.size(); x++) {
 			titles.add(holdings.get(x).getTitle()); 
 		}
@@ -77,7 +80,7 @@ public class Library {
 	}
 	
 	public boolean isISBNInHoldings (long isbn13) {
-		ArrayList <Long> isbns = new ArrayList<>(10);
+		List <Long> isbns = new ArrayList<>(10);
 		for (int x = 0; x < holdings.size(); x++) {
 			isbns.add(holdings.get(x).getISBN13()); 
 		}
@@ -91,7 +94,7 @@ public class Library {
 	}
 	
 	public Book getBook (long isbn13) {
-		ArrayList <Long> isbns = new ArrayList<>(10);
+		List <Long> isbns = new ArrayList<>(10);
 		for (int x = 0; x < holdings.size(); x++) {
 			isbns.add(holdings.get(x).getISBN13()); 
 		}
