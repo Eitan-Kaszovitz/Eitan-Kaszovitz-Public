@@ -15,9 +15,9 @@ public class Book {
 		if (title == null || title.replaceAll("\\s", "").toString().length() == 0 || singleAuthor == null || singleAuthor.replaceAll("\\s", "").toString().length() == 0 || bookType == null || bookType.replaceAll("\\s", "").toString().length() == 0) {
 			throw new IllegalArgumentException();
 		}
-		/*if ((String.valueOf(isbn).length()) != 14) {
+		if (((String.valueOf(isbn).length()) != 13) || (isbn < 0)) {
 			throw new IllegalArgumentException();
-		}*/
+		}
 		
 		if (!bookType.equals("hardcover") && !bookType.equals("paperback") && !bookType.equals("ebook")) {
 			throw new IllegalArgumentException();
@@ -49,17 +49,19 @@ public class Book {
         if (o == this) {
         return true;
         }
-        if (!(o instanceof Book)) {
+        if (o == null) {
+        	return false;
+        }
+        if (getClass() != o.getClass()) {
             return false;
         }
-        
         Book book = (Book) o;
-        return (isbn == book.isbn) && Objects.equals(title, book.title) && Objects.equals(singleAuthor, book.singleAuthor) && Objects.equals(bookType, book.bookType);
+        return (isbn == book.getISBN13()); 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, singleAuthor, isbn, bookType);
+        return Objects.hash(isbn);
     }
 
 }
