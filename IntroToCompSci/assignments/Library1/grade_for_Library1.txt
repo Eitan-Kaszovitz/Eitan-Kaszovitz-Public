@@ -1,0 +1,85 @@
+Grade for assignment [KaszovitzEitan]: 9.5/10
+
+Good work, need to code a bit more defensively
+
+
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/Library1
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 2
+Running edu.yu.intro.test.TestBook
+Execution Started : testEmptyTitle
+Execution Finished : testEmptyTitle
+Execution Started : testInvalidIsbn
+Execution Finished : testInvalidIsbn
+Execution Started : testEmptyAuthor
+Execution Finished : testEmptyAuthor
+Execution Started : testInvalidBookType
+Execution Finished : testInvalidBookType
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-10 20:02:11.010 [main] TestBook testVanillaConstructor - Created book edu.yu.intro.Book@3e82f7ae
+Execution Finished : testVanillaConstructor
+Execution Started : equalsAndHashcodeImplementation
+Execution Finished : equalsAndHashcodeImplementation
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.378 sec - in edu.yu.intro.test.TestBook
+Running edu.yu.intro.test.TestLibrary
+Execution Started : testEmptyPhoneNumber
+Execution Finished : testEmptyPhoneNumber
+Execution Started : addedBooksScenario
+Execution Finished : addedBooksScenario
+Execution Started : isbnQueryMustSupplyPositiveISBN
+Execution Failure : java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+Execution Finished : isbnQueryMustSupplyPositiveISBN
+Execution Started : testEmptyName
+Execution Finished : testEmptyName
+Execution Started : queryByTitleMustNotBeNull
+Execution Finished : queryByTitleMustNotBeNull
+Execution Started : testEmptyAddress
+Execution Finished : testEmptyAddress
+Execution Started : multipleCopiesOfBooksAllowed
+Execution Finished : multipleCopiesOfBooksAllowed
+Execution Started : queryByTitleMustNotBeEmpty
+Execution Finished : queryByTitleMustNotBeEmpty
+Execution Started : newLibraryScenario
+Execution Finished : newLibraryScenario
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-10 20:02:11.026 [main] TestLibrary testVanillaConstructor - Created library edu.yu.intro.Library@a24b3484
+Execution Finished : testVanillaConstructor
+Execution Started : equalsAndHashcodeImplementation
+Execution Finished : equalsAndHashcodeImplementation
+Execution Started : isbnQueryMustSupplyCorrectNumberOfDigits
+Execution Failure : java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+Execution Finished : isbnQueryMustSupplyCorrectNumberOfDigits
+Tests run: 13, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.002 sec <<< FAILURE! - in edu.yu.intro.test.TestLibrary
+isbnQueryMustSupplyPositiveISBN(edu.yu.intro.test.TestLibrary)  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+
+isbnQueryMustSupplyCorrectNumberOfDigits(edu.yu.intro.test.TestLibrary)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+
+Test cases executed : 20
+
+Results :
+
+Failed tests: 
+  TestLibrary.isbnQueryMustSupplyCorrectNumberOfDigits Expected exception: java.lang.RuntimeException
+  TestLibrary.isbnQueryMustSupplyPositiveISBN Expected exception: java.lang.RuntimeException
+
+Tests run: 20, Failures: 2, Errors: 0, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project Library1: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/Library1/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
