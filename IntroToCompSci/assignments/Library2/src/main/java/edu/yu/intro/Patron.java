@@ -8,7 +8,7 @@ public class Patron {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private UUID id = UUID.randomUUID();
+	private UUID id; 
 	
 	public Patron (String firstName, String lastName, String address){
 		if (firstName == null || firstName.replaceAll("\\s", "").toString().length() == 0 || lastName == null || lastName.replaceAll("\\s", "").toString().length() == 0 || address == null || address.replaceAll("\\s", "").toString().length() == 0) {
@@ -17,6 +17,7 @@ public class Patron {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
+		id = UUID.randomUUID();
 	}
 
 	public String getFirstName () {

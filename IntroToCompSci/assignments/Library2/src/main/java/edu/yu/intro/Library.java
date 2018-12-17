@@ -109,6 +109,10 @@ public class Library {
 	public int nBooks() {
 		return holdings.size();
 	}
+	
+	public void clear() {
+		holdings.clear();
+	}
 
 
 
