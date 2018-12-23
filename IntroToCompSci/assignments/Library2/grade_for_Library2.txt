@@ -1,0 +1,118 @@
+Grade for assignment [KaszovitzEitan]: 9/10
+
+Some defensive coding mistakes but one more serious as well: testVanillaContainerBehavior
+
+
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/Library2
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 4
+Running edu.yu.intro.test.TestPatrons
+Execution Started : patronLastNameQueryCantSupplyNull
+Execution Finished : patronLastNameQueryCantSupplyNull
+Execution Started : patronLastNameQueryWithEmptyStringReturnsAllPatrons
+Execution Finished : patronLastNameQueryWithEmptyStringReturnsAllPatrons
+Execution Started : getByUUIDMustBeNonNull
+Execution Finished : getByUUIDMustBeNonNull
+Execution Started : testVanillaContainerBehavior
+Execution Failure : java.lang.AssertionError: Mismatch on patron1 expected:<Jane Ballisante 14 South Ct New York, NY 10010 2bf931cc-e403-4044-bc70-074cd906b2b4> but was:<null>
+Execution Finished : testVanillaContainerBehavior
+Execution Started : getByUUIDMustBeNonEmpty
+Execution Finished : getByUUIDMustBeNonEmpty
+Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.053 sec <<< FAILURE! - in edu.yu.intro.test.TestPatrons
+testVanillaContainerBehavior(edu.yu.intro.test.TestPatrons)  Time elapsed: 0.006 sec  <<< FAILURE!
+java.lang.AssertionError: Mismatch on patron1 expected:<Jane Ballisante 14 South Ct New York, NY 10010 2bf931cc-e403-4044-bc70-074cd906b2b4> but was:<null>
+	at edu.yu.intro.test.TestPatrons.testVanillaContainerBehavior(TestPatrons.java:76)
+
+Running edu.yu.intro.test.TestBook
+Execution Started : invalidEmptyAuthor
+Execution Finished : invalidEmptyAuthor
+Execution Started : invalidEmptyTitle
+Execution Finished : invalidEmptyTitle
+Execution Started : invalidBookType
+Execution Finished : invalidBookType
+Execution Started : testEqualsAndHashcodes
+Execution Finished : testEqualsAndHashcodes
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-17 20:14:35.888 [main] TestBook testVanillaConstructor - Created book edu.yu.intro.Book@3e82f7ae
+Execution Finished : testVanillaConstructor
+Execution Started : invalidEmptyIsbn
+Execution Finished : invalidEmptyIsbn
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.313 sec - in edu.yu.intro.test.TestBook
+Running edu.yu.intro.test.TestPatron
+Execution Started : invalidEmptyFirstName
+Execution Finished : invalidEmptyFirstName
+Execution Started : invalidEmptyAddress
+Execution Finished : invalidEmptyAddress
+Execution Started : invalidEmptyLastName
+Execution Finished : invalidEmptyLastName
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-17 20:14:35.894 [main] TestPatron testVanillaConstructor - Created patron Jane Ballisante 14 South Ct New York, NY 10010 6180f5a3-cc92-4d38-a887-84542045b10e
+Execution Finished : testVanillaConstructor
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in edu.yu.intro.test.TestPatron
+Running edu.yu.intro.test.TestLibrary
+Execution Started : queryByISBNMustBeValid
+Execution Failure : java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+Execution Finished : queryByISBNMustBeValid
+Execution Started : runDriver
+Execution Finished : runDriver
+Execution Started : addedBooksScenario
+Execution Finished : addedBooksScenario
+Execution Started : queryByISBNMustBePositive
+Execution Failure : java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+Execution Finished : queryByISBNMustBePositive
+Execution Started : queryByTitleMustNotBeNull
+Execution Finished : queryByTitleMustNotBeNull
+Execution Started : invalidEmptyAddress
+Execution Finished : invalidEmptyAddress
+Execution Started : multipleCopiesOfBooksAllowed
+Execution Finished : multipleCopiesOfBooksAllowed
+Execution Started : queryByTitleMustNotBeEmpty
+Execution Finished : queryByTitleMustNotBeEmpty
+Execution Started : newLibraryScenario
+Execution Finished : newLibraryScenario
+Execution Started : testEqualsAndHashcode
+Execution Finished : testEqualsAndHashcode
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-17 20:14:35.906 [main] TestLibrary testVanillaConstructor - Created library edu.yu.intro.Library@a24b3484
+Execution Finished : testVanillaConstructor
+Execution Started : invalidEmptyPhoneNumber
+Execution Finished : invalidEmptyPhoneNumber
+Execution Started : invalidEmptyName
+Execution Finished : invalidEmptyName
+Tests run: 14, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.01 sec <<< FAILURE! - in edu.yu.intro.test.TestLibrary
+queryByISBNMustBeValid(edu.yu.intro.test.TestLibrary)  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+
+queryByISBNMustBePositive(edu.yu.intro.test.TestLibrary)  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.AssertionError: Expected exception: java.lang.RuntimeException
+
+Test cases executed : 31
+
+Results :
+
+Failed tests: 
+  TestLibrary.queryByISBNMustBePositive Expected exception: java.lang.RuntimeException
+  TestLibrary.queryByISBNMustBeValid Expected exception: java.lang.RuntimeException
+  TestPatrons.testVanillaContainerBehavior:76 Mismatch on patron1 expected:<Jane Ballisante 14 South Ct New York, NY 10010 2bf931cc-e403-4044-bc70-074cd906b2b4> but was:<null>
+
+Tests run: 31, Failures: 3, Errors: 0, Skipped: 0
+
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project Library2: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/Library2/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
