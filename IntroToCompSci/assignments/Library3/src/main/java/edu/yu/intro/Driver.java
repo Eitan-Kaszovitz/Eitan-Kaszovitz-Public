@@ -3,11 +3,10 @@ package edu.yu.intro;
 public class Driver {
 
 	public static Library run() {
-		Library pplLibraryclear = new Library ("PPL Library", "500 Central Avenue", "5169675973");
-		pplLibraryclear.clearBooks();
-		pplLibraryclear.clearPatrons();
-
 		Library pplLibrary = new Library ("PPL Library", "500 Central Avenue", "5169675973");
+		pplLibrary.clearBooks();
+		pplLibrary.clearPatrons();
+		
 		Book book1 = new Book ("Moneyball", "Michael Lewis", 5121211212121L, "paperback");
 		Book book2 = new Book ("Hamlet", "Shakespeare", 3121214312121L, "paperback");
 		Book book3 = new Book ("Romeo and Juliet", "Shakespeare", 3121103321321L, "ebook");
