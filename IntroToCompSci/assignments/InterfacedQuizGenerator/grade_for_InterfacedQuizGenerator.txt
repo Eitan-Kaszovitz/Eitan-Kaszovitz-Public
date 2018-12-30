@@ -1,0 +1,17 @@
+Grade for assignment [KaszovitzEitan]: 10/10
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/InterfacedQuizGenerator
+Question 1: What is 98 + 57? Question 2: What is 41 + 91? Question 3: What is 97 - 97? Question 4: What is 53 - 53? Question 5: What is 99 - 34? Question 6: What is 54 - 9? Question 7: What is 6 + 1? Question 8: What is 29 - 29? Question 9: What is 96 - 28? Question 10: What is 81 + 75? 
+Here are the correct answers:
+Question 1: What is 98 + 57? Real Answer is 155. You said 1, which is INCORRECT.
+Question 2: What is 41 + 91? Real Answer is 132. You said 2, which is INCORRECT.
+Question 3: What is 97 - 97? Real Answer is 0. You said 3, which is INCORRECT.
+Question 4: What is 53 - 53? Real Answer is 0. You said 4, which is INCORRECT.
+Question 5: What is 99 - 34? Real Answer is 65. You said 5, which is INCORRECT.
+Question 6: What is 54 - 9? Real Answer is 45. You said 6, which is INCORRECT.
+Question 7: What is 6 + 1? Real Answer is 7. You were CORRECT.
+Question 8: What is 29 - 29? Real Answer is 0. You said 8, which is INCORRECT.
+Question 9: What is 96 - 28? Real Answer is 68. You said 9, which is INCORRECT.
+Question 10: What is 81 + 75? Real Answer is 156. You said 10, which is INCORRECT.
+
+You got 1 questions correct.
+Your grade on the quiz is a 10.
