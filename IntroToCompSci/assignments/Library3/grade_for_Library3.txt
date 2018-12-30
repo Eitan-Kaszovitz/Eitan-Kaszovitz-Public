@@ -1,0 +1,110 @@
+Grade for assignment [KaszovitzEitan]: 10/10 (am impressed, nice work!)
+
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/1300/KaszovitzEitan/IntroToCompSci/assignments/Library3
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Test cases to execute : 4
+Running edu.yu.intro.test.TestBookFilter
+Execution Started : shouldNotHaveMatchedAuthorAndISBN
+Execution Finished : shouldNotHaveMatchedAuthorAndISBN
+Execution Started : shouldHaveMatchedAuthorAndISBN
+Execution Finished : shouldHaveMatchedAuthorAndISBN
+Execution Started : defaultFilterMatchesAnyBook
+Execution Finished : defaultFilterMatchesAnyBook
+Execution Started : testMatchFailsOnWrongISBN
+Execution Finished : testMatchFailsOnWrongISBN
+Execution Started : testMatchOnBookType
+Execution Finished : testMatchOnBookType
+Execution Started : ISBNMustBeValid
+Execution Finished : ISBNMustBeValid
+Execution Started : emptyTitleIsInvalid
+Execution Finished : emptyTitleIsInvalid
+Execution Started : bookTypeMustBeValid
+Execution Finished : bookTypeMustBeValid
+Execution Started : testMatchOnAuthor
+Execution Finished : testMatchOnAuthor
+Execution Started : testMatchFailsOnWrongBookType
+Execution Finished : testMatchFailsOnWrongBookType
+Execution Started : emptyAuthorIsInvalid
+Execution Finished : emptyAuthorIsInvalid
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.365 sec - in edu.yu.intro.test.TestBookFilter
+Running edu.yu.intro.test.TestBook
+Execution Started : ISBNMustBeValid
+Execution Finished : ISBNMustBeValid
+Execution Started : emptyTitleIsInvalid
+Execution Finished : emptyTitleIsInvalid
+Execution Started : bookTypeMustBeValid
+Execution Finished : bookTypeMustBeValid
+Execution Started : testEqualsAndHashcode
+Execution Finished : testEqualsAndHashcode
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-24 20:11:06.923 [main] TestBook testVanillaConstructor - Created book The Riddle-Master of Hed Patricia A. McKillip 9780689305450 hardcover
+Execution Finished : testVanillaConstructor
+Execution Started : emptyAuthorIsInvalid
+Execution Finished : emptyAuthorIsInvalid
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in edu.yu.intro.test.TestBook
+Running edu.yu.intro.test.TestPatron
+Execution Started : emptyAddressIsInvalid
+Execution Finished : emptyAddressIsInvalid
+Execution Started : emptyLastNameIsInvalid
+Execution Finished : emptyLastNameIsInvalid
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : emptyFirstNameIsInvalid
+Execution Finished : emptyFirstNameIsInvalid
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-24 20:11:06.936 [main] TestPatron testVanillaConstructor - Created patron Jane Ballisante 14 South Ct New York, NY 10010 a047d6ea-1d06-4d69-8318-ace02db4b2db
+Execution Finished : testVanillaConstructor
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec - in edu.yu.intro.test.TestPatron
+Running edu.yu.intro.test.TestLibrary
+Execution Started : sameBookCanBeBorrowedMultipleTimesConcurrentlyEvenIfThatMakesNoSense
+Execution Finished : sameBookCanBeBorrowedMultipleTimesConcurrentlyEvenIfThatMakesNoSense
+Execution Started : onLoanOnlyIfPatronIsMemberOfLibrary
+Execution Finished : onLoanOnlyIfPatronIsMemberOfLibrary
+Execution Started : testNoBooksOnLoanToPatron
+Execution Finished : testNoBooksOnLoanToPatron
+Execution Started : addAndSearchForBooks
+Execution Finished : addAndSearchForBooks
+Execution Started : canBorrowBookOnlyIfAddedToLibrary
+Execution Finished : canBorrowBookOnlyIfAddedToLibrary
+Execution Started : canBorrowOnlyIfLibraryMember
+Execution Finished : canBorrowOnlyIfLibraryMember
+Execution Started : testEqualAndHashcode
+Execution Finished : testEqualAndHashcode
+Execution Started : testAddingAndSearchingPatrons
+[Joe Berlowitz 400 Massau St, West Hempstead, NY 11552 31f047fc-ad2b-41c8-8c08-6584a18a5ed4, Jane Ballisante 14 South Ct New York, NY 10010 0eac396f-e4cf-40a4-859c-03ac69560560]
+[]
+[Joe Berlowitz 400 Massau St, West Hempstead, NY 11552 31f047fc-ad2b-41c8-8c08-6584a18a5ed4]
+Execution Finished : testAddingAndSearchingPatrons
+Execution Started : emptyAddressIsInvalid
+Execution Finished : emptyAddressIsInvalid
+Execution Started : testBooksOnLoanToPatron
+[INFO ] 2018-12-24 20:11:06.949 [main] TestLibrary testBooksOnLoanToPatron - Patron Jane Ballisante 14 South Ct New York, NY 10010 1e438d6b-7976-4c1d-be25-42a26588a80c is borrowing book The Hobbit J. R. R. Tolkien 9780547928227 hardcover
+[INFO ] 2018-12-24 20:11:06.949 [main] TestLibrary testBooksOnLoanToPatron - Patron Jane Ballisante 14 South Ct New York, NY 10010 1e438d6b-7976-4c1d-be25-42a26588a80c is borrowing book The Lord of the Rings: 50th Anniversary, One Vol. Edition J. R. R. Tolkien 9780618645619 hardcover
+Execution Finished : testBooksOnLoanToPatron
+Execution Started : emptyPhoneNumberIsInvalid
+Execution Finished : emptyPhoneNumberIsInvalid
+Execution Started : exerciseDriverScenario
+Execution Finished : exerciseDriverScenario
+Execution Started : emptyNameIsInvalid
+Execution Finished : emptyNameIsInvalid
+Execution Started : newLibraryScenario
+Execution Finished : newLibraryScenario
+Execution Started : testNotEquals
+Execution Finished : testNotEquals
+Execution Started : testVanillaConstructor
+[INFO ] 2018-12-24 20:11:06.954 [main] TestLibrary testVanillaConstructor - Created library Finkelstein Memorial Library Central Library 24 W Rte 59, Spring Valley, NY 10977 (845) 352-5700
+Execution Finished : testVanillaConstructor
+Execution Started : multipleCopiesOfBooksCanBeAddedAndBorrowed
+Execution Finished : multipleCopiesOfBooksCanBeAddedAndBorrowed
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 sec - in edu.yu.intro.test.TestLibrary
+Test cases executed : 40
+
+Results :
+
+Tests run: 40, Failures: 0, Errors: 0, Skipped: 0
+
