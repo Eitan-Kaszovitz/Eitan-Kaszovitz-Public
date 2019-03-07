@@ -10,7 +10,7 @@ public class Library {
 	private String phone;
 	private List <Book> holdings = new ArrayList<>(10);
 
-	/////Constructor
+	//////Constructor
 	public Library(String name, String address, String phone){
 		if (name == null || name.replaceAll("\\s", "").toString().length() == 0 || address == null || address.replaceAll("\\s", "").toString().length() == 0 || phone == null || phone.replaceAll("\\s", "").toString().length() == 0) {
 			throw new IllegalArgumentException();
@@ -55,6 +55,11 @@ public class Library {
     public int hashCode() {
         return Objects.hash(name);
     }
+    
+    @Overidde
+    public String toString() {
+    	return String.format("%s %s %s", name, address, phone);
+    }
 	
 	
 	/// Unique Methods
@@ -63,47 +68,46 @@ public class Library {
 	}
 	
 	public boolean isTitleInHoldings (String title) {
-		if ((title == null) || (title.length() == 0)) {
+		if ((title == null) || title.replaceAll("\\s", "").toString().length() == 0) {
 			throw new IllegalArgumentException();
 		}
-		List <String> titles = new ArrayList<String>(10);
-		for (int x = 0; x < holdings.size(); x++) {
-			titles.add(holdings.get(x).getTitle()); 
-		}
-		
-		if (titles.indexOf(title) >= 0) {
-			return true;
-		}
-		else {
-			return false;
+		for (Book book : holdings) {
+			if (book.getTitle().equals(title)) {
+				return true;
+			else {
+				return false;
+			}
 		}
 	}
 	
 	public boolean isISBNInHoldings (long isbn13) {
-		List <Long> isbns = new ArrayList<>(10);
-		for (int x = 0; x < holdings.size(); x++) {
-			isbns.add(holdings.get(x).getISBN13()); 
+		if (((String.valueOf(isbn).replaceAll("\\s", "").toString().length()) != 13) || (isbn < 0)) {
+			throw new IllegalArgumentException();
 		}
-		if (isbns.indexOf(isbn13) >= 0) {
-			return true;
-		}
-		else {
-			return false;
+		for (Book book : holdings) {
+			if (book.getISBN13() == isbn13) {
+				return true;
+			else {
+				return false;
+			}
 		}
 		
 	}
 	
 	public Book getBook (long isbn13) {
-		List <Long> isbns = new ArrayList<>(10);
-		for (int x = 0; x < holdings.size(); x++) {
-			isbns.add(holdings.get(x).getISBN13()); 
+		if (((String.valueOf(isbn).replaceAll("\\s", "").toString().length()) != 13) || (isbn < 0)) {
+			throw new IllegalArgumentException();
 		}
-		if (isbns.indexOf(isbn13) >= 0) {
-			return holdings.get(isbns.indexOf(isbn13));
+		Book book1 = null;
+		for (Book book : holdings) {
+			if (book.getISBN13() == isbn13) {
+				book1 = book;
+			}
+			else {
+				book1 = null;
+			}
 		}
-		else {
-			return null;
-		}
+		return book1;
 	}
 	
 	public int nBooks() {

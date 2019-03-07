@@ -54,7 +54,7 @@ public class Patron {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id.toString());
     }
 	
 	@Override

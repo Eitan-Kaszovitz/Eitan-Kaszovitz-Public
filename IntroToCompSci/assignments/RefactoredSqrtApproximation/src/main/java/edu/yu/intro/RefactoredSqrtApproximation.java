@@ -14,7 +14,7 @@ public class RefactoredSqrtApproximation {
 		if (number < 0) {
 			throw new IllegalArgumentException();
 		}
-		double [] bigArray = calculateSquareRoots(number + 1);
+		double [] bigArray = calculateSquareRoots(number);
 		double c = 0;
 		System.out.println("***********************************************");
 		for (int x = 0; x < (bigArray.length); x++) {
@@ -30,8 +30,8 @@ public class RefactoredSqrtApproximation {
 		if (number < 0) {
 			throw new IllegalArgumentException();
 		}
-		double[] sqrtArray = new double [number];
-		for (int i = 0; i < number; i++){
+		double[] sqrtArray = new double [number + 1];
+		for (int i = 0; i < sqrtArray.length; i++){
 			sqrtArray[i] = sqrt(i);
 		}
 		return sqrtArray;

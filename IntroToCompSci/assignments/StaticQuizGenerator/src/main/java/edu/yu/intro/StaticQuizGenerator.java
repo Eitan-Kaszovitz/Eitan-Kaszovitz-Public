@@ -58,15 +58,22 @@ public class StaticQuizGenerator {
 		for(int k = 0; k < N_QUIZ_QUESTIONS; k++){
 			realAnswers[k] = (firstNumbers[k] + secondNumbers[k]);
 		}
+		int correctQuestions = 0;
+		int points = 0;
 		for(int k = 0; k < N_QUIZ_QUESTIONS; k++){
 			int qNumber = k + 1;
 			System.out.print("Question " + qNumber + ": " + firstNumbers[k] + " + " + secondNumbers[k] + " = " + realAnswers[k] + ". ");
 			if (answersResults[k]){
 			System.out.println("You were CORRECT.");
+			correctQuestions++;
+			points += 10;
 			}
 			else{
 			System.out.println("You said " + userAnswers[k] + ", which is INCORRECT.");
 			}
 		}
+		System.out.println();
+		System.out.println("You got " + correctQuestions + " questions correct.");
+		System.out.println("Your grade on the quiz is a " + points ".");
 	}
 }

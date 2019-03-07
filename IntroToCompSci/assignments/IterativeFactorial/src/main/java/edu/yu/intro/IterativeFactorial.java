@@ -7,9 +7,9 @@ public class IterativeFactorial {
 	public static void main (final String [] args) {
 		Scanner input = new Scanner (System.in);
 		System.out.print("Enter ‘n‘ -- I will calculate ‘factorial(n)‘: ");
-		int total = 1;
-		int FirstNumber = input.nextInt();
-		int number = FirstNumber;
+		long total = 1;
+		long FirstNumber = input.nextInt();
+		long number = FirstNumber;
 		
 		if (number < 1) {
 			System.out.println("error: integer input must be positive ");

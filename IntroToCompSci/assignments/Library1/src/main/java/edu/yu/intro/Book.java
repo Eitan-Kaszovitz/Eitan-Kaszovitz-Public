@@ -63,5 +63,10 @@ public class Book {
     public int hashCode() {
         return Objects.hash(isbn);
     }
+    
+    @Overidde
+    public String toString() {
+    	return String.format("%s %s %d %s", title, singleAuthor, isbn, bookType);
+    }
 
 }
