@@ -198,11 +198,13 @@ class DocumentStoreImpl implements DocumentStore {
             SevenZOutputFile szout = new SevenZOutputFile(sc);
             szout.putArchiveEntry(sza);
             szout.write(s.getBytes());
+            szout.closeArchiveEntry();
             byte[] compressed = sc.array();
             createDocument(s, compressed, uri, format);
             return store.get(uri).getDocumentHashCode();
         }
         catch (IOException | NullPointerException e) {
+            e.printStackTrace();
             return -1;
         }
     }
