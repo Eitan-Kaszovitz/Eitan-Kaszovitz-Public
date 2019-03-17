@@ -1,9 +1,6 @@
 package edu.yu.cs.com1320.project;
 
-import sun.misc.IOUtils;
-import java.io.InputStream;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 
 public class DocumentImpl implements Document {
 
