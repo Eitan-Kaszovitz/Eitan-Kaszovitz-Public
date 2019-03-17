@@ -1,10 +1,10 @@
 package edu.yu.cs.com1320.project;
 
-class MyHashTable<Key, Value> implements HashTable<Key,Value> {
+public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
     Object[] table;
     int n;
 
-    public MyHashTable(int size) {
+    public HashTableImpl(int size) {
         this.n = 0;
         this.table = new Object[size];
         for (int i = 0; i < table.length; i++) {
@@ -12,12 +12,13 @@ class MyHashTable<Key, Value> implements HashTable<Key,Value> {
         }
     }
 
-    class Node {
+
+    private class Node {
         Key key;
         Value value;
         Node next;
 
-        public Node(Key key, Value value) {
+        private Node(Key key, Value value) {
             this.key = key;
             this.value = value;
             this.next = null;
@@ -31,33 +32,6 @@ class MyHashTable<Key, Value> implements HashTable<Key,Value> {
 
     }
 
-
-    /*@Override
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (o == null) {
-            return false;
-        }
-        if (getClass() != o.getClass()) {
-            return false;
-        }
-
-        Node key = (Key) o;
-        return Objects.equals(key, key.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s %s %s", name, address, phone);
-    }
-*/
 
     public Value get(Key k) {
         if (k == null) {
