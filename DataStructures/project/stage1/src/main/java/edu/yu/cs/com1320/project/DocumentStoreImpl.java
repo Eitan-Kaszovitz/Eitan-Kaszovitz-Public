@@ -16,10 +16,7 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 
 
@@ -193,12 +190,13 @@ class DocumentStoreImpl implements DocumentStore {
 
     protected int compressSevenz(String s, CompressionFormat format, URI uri) {
         try {
-            SevenZArchiveEntry sza = new SevenZArchiveEntry();
             SeekableInMemoryByteChannel sc = new SeekableInMemoryByteChannel();
             SevenZOutputFile szout = new SevenZOutputFile(sc);
+            SevenZArchiveEntry sza = szout.createArchiveEntry(new File("this"), "that");
             szout.putArchiveEntry(sza);
             szout.write(s.getBytes());
             szout.closeArchiveEntry();
+            szout.close();
             byte[] compressed = sc.array();
             createDocument(s, compressed, uri, format);
             return store.get(uri).getDocumentHashCode();
@@ -291,13 +289,11 @@ class DocumentStoreImpl implements DocumentStore {
         try {
             SeekableInMemoryByteChannel sc = new SeekableInMemoryByteChannel(b);
             SevenZFile szf = new SevenZFile(sc);
-            SevenZArchiveEntry entry;
+            SevenZArchiveEntry entry = szf.getNextEntry();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            while ((entry = szf.getNextEntry())  != null) {
-                byte[] content = new byte[10000];
-                szf.read(content, 0, content.length);
-                bos.write(content);
-            }
+            byte[] content = new byte[(int) entry.getSize()];
+            szf.read(content, 0, content.length);
+            bos.write(content);
             String dcString = bos.toString();
             return dcString;
         }
