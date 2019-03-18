@@ -12,6 +12,9 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
         }
     }
 
+    public HashTableImpl() {
+        this(101);
+    }
 
     private class Node {
         Key key;

@@ -20,10 +20,10 @@ import java.io.*;
 import java.net.URI;
 
 
-class DocumentStoreImpl implements DocumentStore {
+public class DocumentStoreImpl implements DocumentStore {
 
-    HashTableImpl<URI, Document> store;
-    CompressionFormat defaultCompressionFormat;
+    private HashTableImpl<URI, Document> store;
+    private CompressionFormat defaultCompressionFormat = CompressionFormat.ZIP;
 
     public DocumentStoreImpl() {
         this.store = new HashTableImpl<>(4);
@@ -35,7 +35,7 @@ class DocumentStoreImpl implements DocumentStore {
 
     @Override
     public CompressionFormat getDefaultCompressionFormat() {
-        return CompressionFormat.ZIP;
+        return this.defaultCompressionFormat;
     }
 
     public int putDocument(InputStream input, URI uri) {

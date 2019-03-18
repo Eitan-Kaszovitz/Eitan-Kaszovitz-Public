@@ -1,14 +1,11 @@
 package edu.yu.cs.com1320.project;
 
 
-import java.io.ByteArrayInputStream;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-
 public class Stage1Test {
 
     public static void main (String[] args) {
 
+        /*
         String str1 = "https://www.google.co.in/?gws_rd=ssl#"+""
                 + "q=networking+in+java+geeksforgeeks"+""
                 +"&spf=1496918039682";
@@ -45,26 +42,15 @@ public class Stage1Test {
 
         mystore.store.printTable();
 
+        */
 
 
-
-
-
-
-
-
-
-
-
-
-
-        /*
         HashTableImpl<Integer, String> mylist = new HashTableImpl(4);
         mylist.put(003, "Reuven");
         mylist.put(174, "Shimon");
         mylist.put(987, "Reuven");
         mylist.put(385, "Levi");
-        mylist.put(493, "Yehuda")
+        mylist.put(493, "Yehuda");
         mylist.put(685, "Yissachar");
         mylist.put(943, "Zevulen");
         mylist.put(4343, "Don");
@@ -78,10 +64,7 @@ public class Stage1Test {
         mylist.put(5675, "Yaakov");
         mylist.put(4365, "Moshe");
 
-        System.out.println(mylist.get(5675));
-        System.out.println(mylist.get(685));
-        System.out.println(mylist.get(3653));
-        */
+        mylist.printTable();
 
     }
 
