@@ -320,4 +320,8 @@ public class DocumentStoreImpl implements DocumentStore {
         }
     }
 
+    protected void printdocStore() {
+        this.store.printTable();
+    }
+
 }
