@@ -59,32 +59,28 @@ public interface DocumentStore {
      */
     boolean deleteDocument(URI uri);
 
-}
-
-
-
-
     /**
-     *
      * DO NOT IMPLEMENT IN STAGE 1 OF THE PROJECT. THIS IS FOR STAGE 2.
-     *
+     * <p>
      * undo the last put or delete command
+     *
      * @return true if successfully undid command, false if not successful
      * @throws IllegalStateException if there are no actions to be undone, i.e. the command stack is empty
      */
-    /*
+
     boolean undo() throws IllegalStateException;
-     */
+
 
     /**
-     *
      * DO NOT IMPLEMENT IN STAGE 1 OF THE PROJECT. THIS IS FOR STAGE 2.
-     *
+     * <p>
      * undo the last put or delete that was done with the given URI as its key
+     *
      * @param uri
      * @return
      * @throws IllegalStateException if there are no actions on the command stack for the given URI
      */
-    /*boolean undo(URI uri) throws IllegalStateException;
+    boolean undo(URI uri) throws IllegalStateException;
 
-     */
+
+}

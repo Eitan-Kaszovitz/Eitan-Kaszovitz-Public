@@ -1,5 +1,8 @@
-package edu.yu.cs.com1320.project;
+package edu.yu.cs.com1320.project.Impl;
 
+import edu.yu.cs.com1320.project.Command;
+import edu.yu.cs.com1320.project.Document;
+import edu.yu.cs.com1320.project.DocumentStore;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
@@ -18,15 +21,19 @@ import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 
 import java.io.*;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 
 public class DocumentStoreImpl implements DocumentStore {
 
     private HashTableImpl<URI, Document> store;
     private CompressionFormat defaultCompressionFormat = CompressionFormat.ZIP;
+    private StackImpl commandStack;
 
     public DocumentStoreImpl() {
         this.store = new HashTableImpl<>(4);
+        this.commandStack = new StackImpl(20);
     }
 
     public void setDefaultCompressionFormat(CompressionFormat format) {
@@ -40,6 +47,9 @@ public class DocumentStoreImpl implements DocumentStore {
 
     public int putDocument(InputStream input, URI uri) {
         try {
+            if (input == null) {
+                deleteDocument(uri);
+            }
             byte[] bytes = IOUtils.toByteArray(input);
             String docString = new String(bytes);
             if (store.get(uri) != null) {
@@ -50,15 +60,15 @@ public class DocumentStoreImpl implements DocumentStore {
             else {
                 switch (this.defaultCompressionFormat) {
                     case JAR:
-                        return this.compressJar(docString, this.defaultCompressionFormat, uri);
+                        return this.compressJar(docString, this.defaultCompressionFormat, uri, 0);
                     case ZIP:
-                        return this.compressZip(docString, this.defaultCompressionFormat, uri);
+                        return this.compressZip(docString, this.defaultCompressionFormat, uri, 0);
                     case GZIP:
-                        return this.compressGzip(docString, this.defaultCompressionFormat, uri);
+                        return this.compressGzip(docString, this.defaultCompressionFormat, uri, 0);
                     case SEVENZ:
-                        return this.compressSevenz(docString, this.defaultCompressionFormat, uri);
+                        return this.compressSevenz(docString, this.defaultCompressionFormat, uri, 0);
                     case BZIP2:
-                        return this.compressBzip2(docString, this.defaultCompressionFormat, uri);
+                        return this.compressBzip2(docString, this.defaultCompressionFormat, uri, 0);
                 }
             }
         }
@@ -70,6 +80,9 @@ public class DocumentStoreImpl implements DocumentStore {
 
     public int putDocument(InputStream input, URI uri, CompressionFormat format) {
         try {
+            if (input == null) {
+                deleteDocument(uri);
+            }
             byte[] bytes = IOUtils.toByteArray(input);
             String docString = new String(bytes);
             if (store.get(uri) != null) {
@@ -80,15 +93,82 @@ public class DocumentStoreImpl implements DocumentStore {
             else {
                 switch (format) {
                     case JAR:
-                        return this.compressJar(docString, format, uri);
+                        return this.compressJar(docString, format, uri, 0);
                     case ZIP:
-                        return this.compressZip(docString, format, uri);
+                        return this.compressZip(docString, format, uri, 0);
                     case GZIP:
-                        return this.compressGzip(docString, format, uri);
+                        return this.compressGzip(docString, format, uri, 0);
                     case SEVENZ:
-                    return this.compressSevenz(docString, format, uri);
+                    return this.compressSevenz(docString, format, uri, 0);
                     case BZIP2:
-                        return this.compressBzip2(docString, format, uri);
+                        return this.compressBzip2(docString, format, uri, 0);
+                }
+            }
+
+        }
+        catch (IOException | ArchiveException e) {
+            return -1;
+        }
+        return -1;
+    }
+
+    public int putDocumentUndoVersion(InputStream input, URI uri) {
+        try {
+            if (input == null) {
+                deleteDocument(uri);
+            }
+            byte[] bytes = IOUtils.toByteArray(input);
+            String docString = new String(bytes);
+            if (store.get(uri) != null) {
+                if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
+                    return docString.hashCode();
+                }
+            }
+            else {
+                switch (this.defaultCompressionFormat) {
+                    case JAR:
+                        return this.compressJar(docString, this.defaultCompressionFormat, uri, 1);
+                    case ZIP:
+                        return this.compressZip(docString, this.defaultCompressionFormat, uri, 1);
+                    case GZIP:
+                        return this.compressGzip(docString, this.defaultCompressionFormat, uri, 1);
+                    case SEVENZ:
+                        return this.compressSevenz(docString, this.defaultCompressionFormat, uri,1);
+                    case BZIP2:
+                        return this.compressBzip2(docString, this.defaultCompressionFormat, uri,1);
+                }
+            }
+        }
+        catch (IOException | ArchiveException e) {
+            return -1;
+        }
+        return -1;
+    }
+
+    public int putDocumentUndoVersion(InputStream input, URI uri, CompressionFormat format) {
+        try {
+            if (input == null) {
+                deleteDocument(uri);
+            }
+            byte[] bytes = IOUtils.toByteArray(input);
+            String docString = new String(bytes);
+            if (store.get(uri) != null) {
+                if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
+                    return docString.hashCode();
+                }
+            }
+            else {
+                switch (format) {
+                    case JAR:
+                        return this.compressJar(docString, format, uri, 1);
+                    case ZIP:
+                        return this.compressZip(docString, format, uri, 1);
+                    case GZIP:
+                        return this.compressGzip(docString, format, uri, 1);
+                    case SEVENZ:
+                        return this.compressSevenz(docString, format, uri, 1);
+                    case BZIP2:
+                        return this.compressBzip2(docString, format, uri, 1);
                 }
             }
 
@@ -120,23 +200,74 @@ public class DocumentStoreImpl implements DocumentStore {
         return null;
     }
 
+
+
     public byte[] getCompressedDocument(URI uri) {
         return store.get(uri).getDocument();
     }
 
     public boolean deleteDocument(URI uri) {
-        if (store.get(uri) == null) {
-            return false;
+        Boolean deleteStatus = store.deleteObject(uri);
+        if (deleteStatus.equals(true)) {
+            String s = getDocument(uri);
+            InputStream input = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
+            CompressionFormat format = store.get(uri).getCompressionFormat();
+            Function<URI, Boolean> deleteUndo = (uri1) -> {
+                if (format.equals(this.defaultCompressionFormat)) {
+                    this.putDocumentUndoVersion(input, uri1);
+                    return true;
+                } else {
+                    this.putDocumentUndoVersion(input, uri1, format);
+                    return true;
+                }
+            };
+            Function<URI, Boolean> deleteRedo = (uri2) -> {
+                this.deleteDocument(uri2);
+                return true;
+            };
+            Command putCommand = new Command(uri, deleteUndo, deleteRedo);
+            this.commandStack.push(putCommand);
         }
-        else {
-            store.put(uri, null);
-            return true;
+        return deleteStatus;
+    }
+
+    public boolean deleteDocumentUndoVersion(URI uri) {
+        return store.deleteObject(uri);
+    }
+
+    public boolean undo() throws IllegalStateException {
+        if (commandStack.size() == 0) {
+            throw new IllegalStateException("stack empty: no action done previously");
         }
+        Command thisCommand = (Command) commandStack.pop();
+        return thisCommand.undo();
+    }
+
+    public boolean undo(URI uri) throws IllegalStateException {
+        if (commandStack.size() == 0) {
+            throw new IllegalStateException("stack empty: no action done previously");
+        }
+        int stackMax = commandStack.getMax();
+        StackImpl temp = new StackImpl(stackMax);
+        Command current = (Command) commandStack.peek();
+        while (!current.getUri().equals(uri) && (commandStack.size() != 0)) {
+            Command thisCommand = (Command) commandStack.pop();
+            thisCommand.undo();
+            temp.push(thisCommand);
+            current = (Command) commandStack.peek();
+        }
+        Boolean undoCommand = current.undo();
+        while (temp.size() > 0) {
+            Command thatCommand = (Command) temp.pop();
+            thatCommand.redo();
+            commandStack.push(thatCommand);
+        }
+        return undoCommand;
     }
 
     ////////// Compression ///////////
 
-    protected int compressJar(String s, CompressionFormat format, URI uri) {
+    protected int compressJar(String s, CompressionFormat format, URI uri, int undoTest) {
         try {
             JarArchiveEntry zai = new JarArchiveEntry("this");
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -147,15 +278,21 @@ public class DocumentStoreImpl implements DocumentStore {
             os.close();
             bos.close();
             byte[] compressed = bos.toByteArray();
-            createDocument(s, compressed, uri, format);
+            if (undoTest == 0) {
+                createDocument(s, compressed, uri, format);
+            }
+            if (undoTest == 1){
+                createDocumentUndoVerion(s, compressed, uri, format);
+            }
             return store.get(uri).getDocumentHashCode();
+
         }
         catch (IOException | ArchiveException e) {
             return -1;
         }
     }
 
-    protected int compressZip(String s, CompressionFormat format, URI uri) throws ArchiveException {
+    protected int compressZip(String s, CompressionFormat format, URI uri, int undoTest) throws ArchiveException {
         try {
             ZipArchiveEntry zai = new ZipArchiveEntry("this");
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -165,7 +302,12 @@ public class DocumentStoreImpl implements DocumentStore {
             os.closeArchiveEntry();
             os.close();
             byte[] compressed = bos.toByteArray();
-            createDocument(s, compressed, uri, format);
+            if (undoTest == 0) {
+                createDocument(s, compressed, uri, format);
+            }
+            if (undoTest == 1){
+                createDocumentUndoVerion(s, compressed, uri, format);
+            }
             return store.get(uri).getDocumentHashCode();
         }
         catch (IOException | ArchiveException e) {
@@ -173,14 +315,19 @@ public class DocumentStoreImpl implements DocumentStore {
         }
     }
 
-    protected int compressGzip(String s, CompressionFormat format, URI uri) throws IOException {
+    protected int compressGzip(String s, CompressionFormat format, URI uri, int undoTest) throws IOException {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             GzipCompressorOutputStream gzout = new GzipCompressorOutputStream(bos);
             gzout.write(s.getBytes());
             gzout.close();
             byte[] compressed = bos.toByteArray();
-            createDocument(s, compressed, uri, format);
+            if (undoTest == 0) {
+                createDocument(s, compressed, uri, format);
+            }
+            if (undoTest == 1){
+                createDocumentUndoVerion(s, compressed, uri, format);
+            }
             return store.get(uri).getDocumentHashCode();
         }
         catch (IOException e) {
@@ -188,7 +335,7 @@ public class DocumentStoreImpl implements DocumentStore {
         }
     }
 
-    protected int compressSevenz(String s, CompressionFormat format, URI uri) {
+    protected int compressSevenz(String s, CompressionFormat format, URI uri, int undoTest) {
         try {
             SeekableInMemoryByteChannel sc = new SeekableInMemoryByteChannel();
             SevenZOutputFile szout = new SevenZOutputFile(sc);
@@ -198,7 +345,12 @@ public class DocumentStoreImpl implements DocumentStore {
             szout.closeArchiveEntry();
             szout.close();
             byte[] compressed = sc.array();
-            createDocument(s, compressed, uri, format);
+            if (undoTest == 0) {
+                createDocument(s, compressed, uri, format);
+            }
+            if (undoTest == 1){
+                createDocumentUndoVerion(s, compressed, uri, format);
+            }
             return store.get(uri).getDocumentHashCode();
         }
         catch (IOException | NullPointerException e) {
@@ -207,14 +359,19 @@ public class DocumentStoreImpl implements DocumentStore {
         }
     }
 
-    protected int compressBzip2(String s, CompressionFormat format, URI uri) {
+    protected int compressBzip2(String s, CompressionFormat format, URI uri, int undoTest) {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             BZip2CompressorOutputStream bzout = new BZip2CompressorOutputStream(bos);
             bzout.write(s.getBytes());
             bzout.close();
             byte[] compressed = bos.toByteArray();
-            createDocument(s, compressed, uri, format);
+            if (undoTest == 0) {
+                createDocument(s, compressed, uri, format);
+            }
+            if (undoTest == 1){
+                createDocumentUndoVerion(s, compressed, uri, format);
+            }
             return store.get(uri).getDocumentHashCode();
         }
         catch (IOException e) {
@@ -226,6 +383,28 @@ public class DocumentStoreImpl implements DocumentStore {
     ////////// Creation /////////////
 
     protected void createDocument(String s, byte[] compressedbytes, URI uri, CompressionFormat format) {
+        DocumentImpl document = new DocumentImpl(uri, format, s, compressedbytes);
+        store.put(uri, document);
+        InputStream input = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
+        Function<URI, Boolean> putUndo = (uri1) -> {
+            this.deleteDocumentUndoVersion(uri1);
+            return true;
+        };
+        Function<URI, Boolean> putRedo = (uri2) -> {
+            if (format.equals(this.defaultCompressionFormat)) {
+                this.putDocument(input, uri2);
+                return true;
+            }
+            else {
+                this.putDocument(input, uri2, format);
+                return true;
+            }
+        };
+        Command putCommand = new Command(uri, putUndo, putRedo);
+        this.commandStack.push(putCommand);
+    }
+
+    protected void createDocumentUndoVerion(String s, byte[] compressedbytes, URI uri, CompressionFormat format) {
         DocumentImpl document = new DocumentImpl(uri, format, s, compressedbytes);
         store.put(uri, document);
     }

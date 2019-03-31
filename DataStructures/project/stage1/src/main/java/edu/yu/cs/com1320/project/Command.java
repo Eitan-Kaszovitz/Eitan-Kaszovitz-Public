@@ -15,6 +15,8 @@ public final class Command
         this.redo = redo;
     }
 
+
+
     public URI getUri()
     {
         return this.uri;

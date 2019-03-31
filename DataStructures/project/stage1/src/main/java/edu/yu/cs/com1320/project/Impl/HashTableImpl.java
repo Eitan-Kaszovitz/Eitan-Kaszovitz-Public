@@ -1,8 +1,10 @@
-package edu.yu.cs.com1320.project;
+package edu.yu.cs.com1320.project.Impl;
+
+import edu.yu.cs.com1320.project.HashTable;
 
 public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
-    Object[] table;
-    int n;
+    private Object[] table;
+    private int n;
 
     public HashTableImpl(int size) {
         this.n = 0;
@@ -15,6 +17,7 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
     public HashTableImpl() {
         this(101);
     }
+
 
     private class Node {
         Key key;
@@ -35,12 +38,36 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
 
     }
 
+    protected boolean deleteObject(Key uri) {
+        int hash = Math.abs(uri.hashCode() % table.length);
+        if (table[hash] == null) {
+            return false;
+        }
+        Node current = (Node) table[hash];
+        if (current.key.equals(uri)) {
+            table[hash] = current.next;
+            return true;
+        }
+        else {
+            Node previous = null;
+            while (current != null && !current.key.equals(uri)) {
+                previous = (Node) current;
+                current = current.next;
+            }
+            if (current == null) {
+                return false;
+            } else {
+                previous.next = current.next;
+                return true;
+            }
+        }
+    }
 
     public Value get(Key k) {
         if (k == null) {
             throw new IllegalArgumentException();
         }
-        int hash = (k.hashCode() % table.length);
+        int hash = Math.abs(k.hashCode() % table.length);
         if (table[hash] == null) {
             return null;
         } else {
@@ -64,7 +91,7 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
         if (table.length <= (.25 * n)) {
             this.resize();
         }
-        int hash = (k.hashCode() % table.length);
+        int hash = Math.abs(k.hashCode() % table.length);
         if (table[hash] == null) {
             table[hash] = new Node (k, v);
             this.n++;
@@ -104,7 +131,12 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
     protected void printTable(){
         for (int i = 0; i < table.length; i++) {
             Node current = (Node) table[i];
-            System.out.print(current);
+            if (current != null) {
+                System.out.print(current.toString());
+            }
+            else {
+                System.out.print(current);
+            }
             if (current != null) {
                 current = current.next;
             }
@@ -113,7 +145,7 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
                 continue;
             }
             while (current != null) {
-                System.out.print(", " + current);
+                System.out.print(", " + current.toString());
                 current = current.next;
             }
             System.out.println();
