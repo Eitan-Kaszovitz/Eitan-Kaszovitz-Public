@@ -21,7 +21,6 @@ import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
 
 import java.io.*;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 
 
@@ -114,13 +113,8 @@ public class DocumentStoreImpl implements DocumentStore {
         return -1;
     }
 
-    public int putDocumentUndoVersion(InputStream input, URI uri) {
+    public int putDocumentUndoVersion(String docString, URI uri) {
         try {
-            if (input == null) {
-                deleteDocument(uri);
-            }
-            byte[] bytes = IOUtils.toByteArray(input);
-            String docString = new String(bytes);
             if (store.get(uri) != null) {
                 if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
                     return docString.hashCode();
@@ -147,13 +141,8 @@ public class DocumentStoreImpl implements DocumentStore {
         return -1;
     }
 
-    public int putDocumentUndoVersion(InputStream input, URI uri, CompressionFormat format) {
+    public int putDocumentUndoVersion(String docString, URI uri, CompressionFormat format) {
         try {
-            if (input == null) {
-                deleteDocument(uri);
-            }
-            byte[] bytes = IOUtils.toByteArray(input);
-            String docString = new String(bytes);
             if (store.get(uri) != null) {
                 if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
                     return docString.hashCode();
@@ -214,14 +203,13 @@ public class DocumentStoreImpl implements DocumentStore {
         }
         else {                                              //creates command object if delete is successful
             String s = getDocument(uri);
-            InputStream input = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
             CompressionFormat format = store.get(uri).getCompressionFormat();
             Function<URI, Boolean> deleteUndo = (uri1) -> {
                 if (format.equals(this.defaultCompressionFormat)) {
-                    this.putDocumentUndoVersion(input, uri1);
+                    this.putDocumentUndoVersion(s, uri1);
                     return true;
                 } else {
-                    this.putDocumentUndoVersion(input, uri1, format);
+                    this.putDocumentUndoVersion(s, uri1, format);
                     return true;
                 }
             };
@@ -390,18 +378,17 @@ public class DocumentStoreImpl implements DocumentStore {
     protected void createDocument(String s, byte[] compressedbytes, URI uri, CompressionFormat format) {
         DocumentImpl document = new DocumentImpl(uri, format, s, compressedbytes);
         store.put(uri, document);
-        InputStream input = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
         Function<URI, Boolean> putUndo = (uri1) -> {
             this.deleteDocumentUndoVersion(uri1);
             return true;
         };
         Function<URI, Boolean> putRedo = (uri2) -> {
             if (format.equals(this.defaultCompressionFormat)) {
-                this.putDocumentUndoVersion(input, uri2);
+                this.putDocumentUndoVersion(s, uri2);
                 return true;
             }
             else {
-                this.putDocumentUndoVersion(input, uri2, format);
+                this.putDocumentUndoVersion(s, uri2, format);
                 return true;
             }
         };

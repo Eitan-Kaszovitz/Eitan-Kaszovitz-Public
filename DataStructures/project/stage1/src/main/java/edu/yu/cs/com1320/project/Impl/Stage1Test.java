@@ -107,31 +107,31 @@ public class Stage1Test {
         mystore.printdocStore();
 
 
+        mystore.undo();
+
+        System.out.println();
+        System.out.println();
+
+        mystore.printdocStore();
+
+
+        mystore.undo();
+
+        System.out.println();
+        System.out.println();
+
+
+        mystore.printdocStore();
+
         mystore.deleteDocument(uri3);
 
         System.out.println();
         System.out.println();
 
-        mystore.printdocStore();
-
-
-        mystore.deleteDocument(uri2);
-
-        System.out.println();
-        System.out.println();
-
 
         mystore.printdocStore();
 
-        mystore.deleteDocument(uri1);
-
-        System.out.println();
-        System.out.println();
-
-
-        mystore.printdocStore();
-
-        mystore.undo();
+        mystore.undo(uri4);
 
         System.out.println();
         System.out.println();
