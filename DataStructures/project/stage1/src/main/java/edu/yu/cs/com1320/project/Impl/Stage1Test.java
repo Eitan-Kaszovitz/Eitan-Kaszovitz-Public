@@ -131,7 +131,7 @@ public class Stage1Test {
 
         mystore.printdocStore();
 
-        mystore.undo(uri1);
+        mystore.undo();
 
         System.out.println();
         System.out.println();

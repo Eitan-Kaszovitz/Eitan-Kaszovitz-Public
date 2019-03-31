@@ -49,6 +49,7 @@ public class DocumentStoreImpl implements DocumentStore {
         try {
             if (input == null) {
                 deleteDocument(uri);
+                return -1;
             }
             byte[] bytes = IOUtils.toByteArray(input);
             String docString = new String(bytes);
@@ -82,6 +83,7 @@ public class DocumentStoreImpl implements DocumentStore {
         try {
             if (input == null) {
                 deleteDocument(uri);
+                return -1;
             }
             byte[] bytes = IOUtils.toByteArray(input);
             String docString = new String(bytes);
@@ -207,8 +209,10 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     public boolean deleteDocument(URI uri) {
-        Boolean deleteStatus = store.deleteObject(uri);
-        if (deleteStatus.equals(true)) {
+        if (store.get(uri).equals(null)) {
+            return false;
+        }
+        else {                                              //creates command object if delete is successful
             String s = getDocument(uri);
             InputStream input = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8));
             CompressionFormat format = store.get(uri).getCompressionFormat();
@@ -228,10 +232,10 @@ public class DocumentStoreImpl implements DocumentStore {
             Command putCommand = new Command(uri, deleteUndo, deleteRedo);
             this.commandStack.push(putCommand);
         }
-        return deleteStatus;
+        return store.deleteObject(uri);
     }
 
-    public boolean deleteDocumentUndoVersion(URI uri) {
+    public boolean deleteDocumentUndoVersion(URI uri) {                  //deletes a document as an undo function: no command object created
         return store.deleteObject(uri);
     }
 
