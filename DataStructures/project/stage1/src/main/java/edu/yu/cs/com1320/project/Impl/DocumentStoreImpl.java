@@ -260,7 +260,8 @@ public class DocumentStoreImpl implements DocumentStore {
             temp.push(thisCommand);
             current = (Command) commandStack.peek();
         }
-        Boolean undoCommand = current.undo();
+        Command peekPopped = (Command) commandStack.pop();
+        Boolean undoCommand = peekPopped.undo();
         while (temp.size() > 0) {
             Command thatCommand = (Command) temp.pop();
             thatCommand.redo();
