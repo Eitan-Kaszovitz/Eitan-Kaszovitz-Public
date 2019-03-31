@@ -46,6 +46,7 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
         Node current = (Node) table[hash];
         if (current.key.equals(uri)) {
             table[hash] = current.next;
+            this.n--;
             return true;
         }
         else {
@@ -58,6 +59,7 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
                 return false;
             } else {
                 previous.next = current.next;
+                this.n--;
                 return true;
             }
         }

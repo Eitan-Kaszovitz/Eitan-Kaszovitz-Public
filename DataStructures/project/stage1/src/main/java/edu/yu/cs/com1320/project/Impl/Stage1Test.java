@@ -123,7 +123,7 @@ public class Stage1Test {
 
         mystore.printdocStore();
 
-        mystore.undo();
+        mystore.undo(uri1);
 
         System.out.println();
         System.out.println();

@@ -226,7 +226,7 @@ public class DocumentStoreImpl implements DocumentStore {
                 }
             };
             Function<URI, Boolean> deleteRedo = (uri2) -> {
-                this.deleteDocument(uri2);
+                this.deleteDocumentUndoVersion(uri2);
                 return true;
             };
             Command putCommand = new Command(uri, deleteUndo, deleteRedo);
@@ -396,11 +396,11 @@ public class DocumentStoreImpl implements DocumentStore {
         };
         Function<URI, Boolean> putRedo = (uri2) -> {
             if (format.equals(this.defaultCompressionFormat)) {
-                this.putDocument(input, uri2);
+                this.putDocumentUndoVersion(input, uri2);
                 return true;
             }
             else {
-                this.putDocument(input, uri2, format);
+                this.putDocumentUndoVersion(input, uri2, format);
                 return true;
             }
         };
