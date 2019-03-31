@@ -237,16 +237,19 @@ public class DocumentStoreImpl implements DocumentStore {
 
     public boolean undo(URI uri) throws IllegalStateException {
         if (commandStack.size() == 0) {
-            throw new IllegalStateException("stack empty: no action done previously");
+            throw new IllegalStateException("error - stack empty: no action done previously");
         }
         int stackMax = commandStack.getMax();
         StackImpl temp = new StackImpl(stackMax);
         Command current = (Command) commandStack.peek();
-        while (!current.getUri().equals(uri) && (commandStack.size() != 0)) {
+        while ((commandStack.size() != 0) && (!current.getUri().equals(uri))) {
             Command thisCommand = (Command) commandStack.pop();
             thisCommand.undo();
             temp.push(thisCommand);
             current = (Command) commandStack.peek();
+        }
+        if (commandStack.size() == 0) {
+            throw new IllegalStateException("error - uri not found");
         }
         Command peekPopped = (Command) commandStack.pop();
         Boolean undoCommand = peekPopped.undo();
