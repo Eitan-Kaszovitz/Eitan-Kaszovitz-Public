@@ -1,17 +1,17 @@
 package edu.yu.cs.com1320.project.Impl;
 
-
 import edu.yu.cs.com1320.project.DocumentStore;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-public class Stage3Test {
+import static org.junit.Assert.*;
 
-    public static void main (String[] args) {
-
-        //Document Tests//
+public class DocumentStoreImplTest {
 
         DocumentStoreImpl mystore = new DocumentStoreImpl();
 
@@ -102,46 +102,14 @@ public class Stage3Test {
         int code7 = mystore.putDocument(in7, uri7, DocumentStore.CompressionFormat.GZIP);
         String doc7 = mystore.getDocument(uri7);
 
+    @Test
+    public void test1() {
+        assertEquals(code7, source7.hashCode());
+    }
 
-
-        mystore.printdocStore();
-
-        System.out.println(mystore.searchCompressed("apple"));
-
-
-
-
-
-
-
-
-
-        //HashTable Tests//
-
-        /*
-        HashTableImpl<Integer, String> mylist = new HashTableImpl(4);
-        mylist.put(003, "Reuven");
-        mylist.put(174, "Shimon");
-        mylist.put(987, "Reuven");
-        mylist.put(385, "Levi");
-        mylist.put(493, "Yehuda");
-        mylist.put(685, "Yissachar");
-        mylist.put(943, "Zevulen");
-        mylist.put(4343, "Don");
-        mylist.put(843, "Naftali");
-        mylist.put(3232, "Gad");
-        mylist.put(032, "Asher");
-        mylist.put(434, "Yosef");
-        mylist.put(754, "Benyamin");
-        mylist.put(5343, "Avraham");
-        mylist.put(043, "Yitzchak");
-        mylist.put(5675, "Yaakov");
-        mylist.put(4365, "Moshe");
-
-        mylist.printTable();
-        */
-
-
+    @Test
+    public void test2() {
+        assertEquals(code5, source5.hashCode());
     }
 
 

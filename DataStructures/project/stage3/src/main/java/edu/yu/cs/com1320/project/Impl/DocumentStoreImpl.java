@@ -45,18 +45,21 @@ public class DocumentStoreImpl implements DocumentStore {
         protected DocComparator (String s) {
             this.word = s;
         }
-        public int compare(DocumentImpl d1, DocumentImpl d2) {
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            DocumentImpl d1 = (DocumentImpl)o1;
+            DocumentImpl d2 = (DocumentImpl)o2;
             int d1Count = d1.wordCount(this.word);
             int d2Count = d2.wordCount(this.word);
             if (d1Count > d2Count) {
-                return 1;
-            }
-            if (d1Count < d2Count) {
                 return -1;
             }
-            if (d1Count == d2Count) {
+            else if (d1Count < d2Count) {
+                return 1;
+            }
+            else {
                 return 0;
-
             }
         }
     }
@@ -261,13 +264,13 @@ public class DocumentStoreImpl implements DocumentStore {
                     return true;
                 } else {
                     this.putDocumentUndoVersion(s, uri1, format);
-                    this.addWords(this.store.get(uri));
+                    this.addWords(this.store.get(uri1));
                     return true;
                 }
             };
             Function<URI, Boolean> deleteRedo = (uri2) -> {
+                this.deleteWords(uri2);
                 this.deleteDocumentUndoVersion(uri2);
-                this.deleteWords(this.store.get(uri));
                 return true;
             };
             Command putCommand = new Command(uri, deleteUndo, deleteRedo);
@@ -438,19 +441,19 @@ public class DocumentStoreImpl implements DocumentStore {
         store.put(uri, document);
         this.addWords(document);
         Function<URI, Boolean> putUndo = (uri1) -> {
-            this.deleteDocumentUndoVersion(uri1);
             this.deleteWords(uri1);
+            this.deleteDocumentUndoVersion(uri1);
             return true;
         };
         Function<URI, Boolean> putRedo = (uri2) -> {
             if (format.equals(this.defaultCompressionFormat)) {
                 this.putDocumentUndoVersion(s, uri2);
-                this.addWords(this.store.get(uri));
+                this.addWords(this.store.get(uri2));
                 return true;
             }
             else {
                 this.putDocumentUndoVersion(s, uri2, format);
-                this.addWords(this.store.get(uri));
+                this.addWords(this.store.get(uri2));
                 return true;
             }
         };
@@ -556,7 +559,7 @@ public class DocumentStoreImpl implements DocumentStore {
     protected void addWords(DocumentImpl doc) {
         String lowerCase = null;
         for (String current : doc.getWords()) {
-            String lowerCase = current.toLowerCase();
+            lowerCase = current.toLowerCase();
             wordTrie.put(lowerCase, doc);
         }
     }

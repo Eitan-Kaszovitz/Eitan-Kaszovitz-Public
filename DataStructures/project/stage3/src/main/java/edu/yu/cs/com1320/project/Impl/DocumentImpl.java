@@ -64,7 +64,7 @@ public class DocumentImpl implements Document {
     }
 
     @Override
-    protected String toString() {
+    public String toString() {
         return this.string;
     }
 

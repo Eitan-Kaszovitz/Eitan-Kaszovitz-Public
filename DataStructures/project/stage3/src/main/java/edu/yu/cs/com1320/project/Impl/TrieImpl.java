@@ -28,7 +28,8 @@ public class TrieImpl<Value> implements Trie<Value> {
             valList = null;
         }
         protected Node(Value v) {
-            valList = new ArrayList<>{v};
+            valList = new ArrayList<>();
+            valList.add(v);
             links = new Node[alphabetSize];
             for (int i = 0; i < links.length; i++) {
                 links[i] = null;
@@ -150,9 +151,9 @@ public class TrieImpl<Value> implements Trie<Value> {
         else
         {
             char c = key.charAt(d);
-            x.links[c] = this.delete(x.links[c], key, d + 1);
+            x.links[c] = this.delete(x.links[c], key, val, d + 1);
         }
-        if (x.valList.equals(null)) { //root node - the only node with a null value list
+        if (x.valList == null) { //root node - the only node with a null value list
             return x;
         }
         if (!x.valList.isEmpty())     // return node that has documents attached to it
