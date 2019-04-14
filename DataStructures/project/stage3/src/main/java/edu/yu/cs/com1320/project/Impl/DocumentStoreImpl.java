@@ -33,17 +33,20 @@ public class DocumentStoreImpl implements DocumentStore {
     private CompressionFormat defaultCompressionFormat = CompressionFormat.ZIP;
     private StackImpl commandStack;
     private TrieImpl<DocumentImpl> wordTrie;
+    private String compareString;
+    private DocComparator dc;
 
     public DocumentStoreImpl() {
         this.store = new HashTableImpl<>(4);
         this.commandStack = new StackImpl(20);
-        this.wordTrie = new TrieImpl();
+        this.dc = new DocComparator();
+        this.wordTrie = new TrieImpl(this.dc);
     }
 
     protected class DocComparator implements Comparator {
         String word;
-        protected DocComparator (String s) {
-            this.word = s;
+        protected DocComparator () {
+            this.word = null;
         }
 
         @Override
@@ -62,31 +65,52 @@ public class DocumentStoreImpl implements DocumentStore {
                 return 0;
             }
         }
+
+        protected void setWord(String string) {
+            this.word = string;
+        }
     }
 
     public List<String> search(String keyword) {
         String lowerCase = keyword.toLowerCase();
-        DocComparator docComparator = new DocComparator(lowerCase);
-        this.wordTrie.setComparator(docComparator);
-        List<String> stringList = new ArrayList<>();
-        for (DocumentImpl current : this.wordTrie.getAllSorted(lowerCase)) {
-            stringList.add(current.toString());
+        this.dc.setWord(lowerCase);
+        List<DocumentImpl> docList = this.wordTrie.getAllSorted(lowerCase);
+
+        //if word has no docs with it, return null
+        if (docList == null) {
+            return null;
         }
-        return stringList;
+
+        //if word has docs with it, get a list of those docs' strings
+        else {
+            List<String> stringList = new ArrayList<>();
+            for (DocumentImpl current : docList) {
+                stringList.add(current.toString());
+            }
+            return stringList;
+        }
     }
 
 
     public List<byte[]> searchCompressed(String keyword) {
         String lowerCase = keyword.toLowerCase();
-        DocComparator docComparator = new DocComparator(lowerCase);
-        this.wordTrie.setComparator(docComparator);
-        List<byte[]> compressedDocList = new ArrayList<>();
-        for (DocumentImpl current : this.wordTrie.getAllSorted(lowerCase)) {
-            compressedDocList.add(current.getDocument());
-        }
-        return compressedDocList;
-    }
+        this.dc.setWord(lowerCase);
+        List<DocumentImpl> docList = this.wordTrie.getAllSorted(lowerCase);
 
+        //if word has no docs with it, return null
+        if (docList == null) {
+            return null;
+        }
+
+        //if word has docs with it, get a list of those docs' strings
+        else {
+            List<byte[]> compressedDocList = new ArrayList<>();
+            for (DocumentImpl current : docList) {
+                compressedDocList.add(current.getDocument());
+            }
+            return compressedDocList;
+        }
+    }
 
     public void setDefaultCompressionFormat(CompressionFormat format) {
         this.defaultCompressionFormat = format;

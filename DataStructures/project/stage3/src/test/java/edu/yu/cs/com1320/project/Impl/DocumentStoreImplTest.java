@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -103,14 +105,112 @@ public class DocumentStoreImplTest {
         String doc7 = mystore.getDocument(uri7);
 
     @Test
-    public void test1() {
+    public void testPut1() {
         assertEquals(code7, source7.hashCode());
     }
 
     @Test
-    public void test2() {
+    public void testPut2() {
         assertEquals(code5, source5.hashCode());
     }
+
+    @Test
+    public void testGoodSearch() {
+        List<String> myList = new ArrayList<>();
+        myList.add("Apple is better than PC. Apple has better apple computers and better apple phones.");
+        myList.add("An apple is better than a pear because an apple is sweeter");
+        myList.add("This is an apple computer");
+
+        assertEquals(myList, mystore.search("apple"));
+    }
+
+    @Test
+    public void testCaseInsensitiveSearch() {
+        List<String> myList = new ArrayList<>();
+        myList.add("Apple is better than PC. Apple has better apple computers and better apple phones.");
+        myList.add("An apple is better than a pear because an apple is sweeter");
+        myList.add("This is an apple computer");
+
+        assertEquals(myList, mystore.search("aPpLe"));
+    }
+
+    @Test
+    public void testNullSearch() {
+        assertEquals(null, mystore.search("shoe"));
+    }
+
+    @Test
+    public void testNullSearchAfterDelete() {
+        mystore.deleteDocument(uri4);
+        mystore.deleteDocument(uri5);
+        mystore.deleteDocument(uri6);
+
+        assertEquals(null, mystore.search("apple"));
+    }
+
+    @Test
+    public void testSearchAfterDeleteUndo() {
+        mystore.deleteDocument(uri4);
+        mystore.deleteDocument(uri5);
+        mystore.deleteDocument(uri6);
+
+        mystore.undo();
+        mystore.undo();
+        mystore.undo();
+
+        List<String> myList = new ArrayList<>();
+        myList.add("Apple is better than PC. Apple has better apple computers and better apple phones.");
+        myList.add("An apple is better than a pear because an apple is sweeter");
+        myList.add("This is an apple computer");
+
+        assertEquals(myList, mystore.search("apple"));
+    }
+
+    @Test
+    public void testSearchAfterPuUndo() {
+
+        mystore.undo();
+        mystore.undo();
+        mystore.undo();
+
+        List<String> myList = new ArrayList<>();
+        myList.add("This is an apple computer");
+
+        assertEquals(myList, mystore.search("apple"));
+    }
+
+    @Test
+    public void testNullSearchAfterPutUndo() {
+
+        mystore.undo();
+        mystore.undo();
+        mystore.undo();
+        mystore.undo(uri2);
+
+        assertEquals(null, mystore.search("basketball"));
+    }
+
+    @Test
+    public void testSearchAfterRandomDeleteUndo() {
+
+       mystore.deleteDocument(uri4);
+       mystore.deleteDocument(uri3);
+       mystore.undo(uri4);
+
+       List<String> myList = new ArrayList<>();
+       myList.add("Apple is better than PC. Apple has better apple computers and better apple phones.");
+       myList.add("An apple is better than a pear because an apple is sweeter");
+       myList.add("This is an apple computer");
+
+       assertEquals(myList, mystore.search("apple"));
+    }
+
+
+
+
+
+
+
 
 
 

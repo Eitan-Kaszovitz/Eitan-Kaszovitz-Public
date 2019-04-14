@@ -10,9 +10,9 @@ public class TrieImpl<Value> implements Trie<Value> {
     private Node root;
     private Comparator comparator;
 
-    public TrieImpl() {
+    public TrieImpl(Comparator c) {
         this.root = new Node();
-        this.comparator = null;
+        this.comparator = c;
     }
 
     protected class Node<Value>
@@ -52,8 +52,13 @@ public class TrieImpl<Value> implements Trie<Value> {
 
     public List<Value> getAllSorted(String key) {
         List<Value> finalList =  this.get(this.root, key, 0);
-        Collections.sort(finalList, this.comparator);
-        return finalList;
+        if (finalList == null) {
+            return null;
+        }
+        else {
+            Collections.sort(finalList, this.comparator);
+            return finalList;
+        }
     }
 
     private List<Value> get(Node x, String key, int d)
@@ -170,8 +175,5 @@ public class TrieImpl<Value> implements Trie<Value> {
         return null;
     }
 
-    protected void setComparator(Comparator comparator) {
-        this.comparator = comparator;
-    }
 
 }
