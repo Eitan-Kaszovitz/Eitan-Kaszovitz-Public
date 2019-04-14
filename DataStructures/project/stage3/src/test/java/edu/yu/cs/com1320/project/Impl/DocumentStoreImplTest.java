@@ -135,17 +135,20 @@ public class DocumentStoreImplTest {
     }
 
     @Test
-    public void testNullSearch() {
-        assertEquals(null, mystore.search("shoe"));
+    public void testEmptySearch() {
+        List<String> myList = new ArrayList<>();
+        assertEquals(myList, mystore.search("shoe"));
     }
 
     @Test
-    public void testNullSearchAfterDelete() {
+    public void testEmptySearchAfterDelete() {
         mystore.deleteDocument(uri4);
         mystore.deleteDocument(uri5);
         mystore.deleteDocument(uri6);
 
-        assertEquals(null, mystore.search("apple"));
+        List<String> myList = new ArrayList<>();
+
+        assertEquals(myList, mystore.search("apple"));
     }
 
     @Test
@@ -180,14 +183,16 @@ public class DocumentStoreImplTest {
     }
 
     @Test
-    public void testNullSearchAfterPutUndo() {
+    public void testEmptySearchAfterPutUndo() {
 
         mystore.undo();
         mystore.undo();
         mystore.undo();
         mystore.undo(uri2);
 
-        assertEquals(null, mystore.search("basketball"));
+        List<String> myList = new ArrayList<>();
+
+        assertEquals(myList, mystore.search("basketball"));
     }
 
     @Test

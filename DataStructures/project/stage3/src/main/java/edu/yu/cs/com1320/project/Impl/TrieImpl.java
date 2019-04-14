@@ -52,8 +52,8 @@ public class TrieImpl<Value> implements Trie<Value> {
 
     public List<Value> getAllSorted(String key) {
         List<Value> finalList =  this.get(this.root, key, 0);
-        if (finalList == null) {
-            return null;
+        if (finalList.size() == 0) {
+            return finalList;
         }
         else {
             Collections.sort(finalList, this.comparator);
@@ -65,7 +65,8 @@ public class TrieImpl<Value> implements Trie<Value> {
     {
         if (x == null)
         {
-            return null;
+            List<Value> emptyList = new ArrayList<>();
+            return emptyList;
         }
         if (d == key.length())
         {
