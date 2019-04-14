@@ -106,7 +106,20 @@ public class Stage3Test {
 
         mystore.printdocStore();
 
-        System.out.println(mystore.searchCompressed("apple"));
+        System.out.println(mystore.search("apple"));
+
+        mystore.deleteDocument(uri4);
+        mystore.deleteDocument(uri6);
+        mystore.deleteDocument(uri1);
+        mystore.undo(uri3);
+        mystore.undo();
+
+
+
+        System.out.println();
+        System.out.println("Store without uri3, uri4, uri 6");
+        mystore.printdocStore();
+        System.out.println(mystore.search("apple"));
 
 
 

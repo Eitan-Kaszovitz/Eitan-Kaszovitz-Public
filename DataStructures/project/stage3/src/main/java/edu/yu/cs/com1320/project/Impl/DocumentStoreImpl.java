@@ -102,7 +102,7 @@ public class DocumentStoreImpl implements DocumentStore {
             return null;
         }
 
-        //if word has docs with it, get a list of those docs' strings
+        //if word has docs with it, get a list of those docs' compressed forms
         else {
             List<byte[]> compressedDocList = new ArrayList<>();
             for (DocumentImpl current : docList) {
