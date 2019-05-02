@@ -674,9 +674,17 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     protected void makeSpace() {
-        while ((this.store.getN() > this.maxDocCount) && (this.totalBytes > this.maxDocBytes)) {
-            DocumentImpl removedDoc = (DocumentImpl) this.docHeap.removeMin();
-            this.deleteDocumentMaxVersion(removedDoc);
+        if ((this.store.getN() > this.maxDocCount)) {
+            while ((this.store.getN() > this.maxDocCount)) {
+                DocumentImpl removedDoc = (DocumentImpl) this.docHeap.removeMin();
+                this.deleteDocumentMaxVersion(removedDoc);
+            }
+        }
+        if ((this.totalBytes > this.maxDocBytes)) {
+            while ((this.totalBytes > this.maxDocBytes)) {
+                DocumentImpl removedDoc = (DocumentImpl) this.docHeap.removeMin();
+                this.deleteDocumentMaxVersion(removedDoc);
+            }
         }
     }
 

@@ -14,7 +14,7 @@ public class Stage4Test {
         //Document Tests//
 
         DocumentStoreImpl mystore = new DocumentStoreImpl();
-        mystore.setMaxDocumentCount(6);
+        mystore.setMaxDocumentBytes(300);
 
         //////////////////////
         String str1 = "https://www.google.co.in/?gws_rd=ssl#"+""
