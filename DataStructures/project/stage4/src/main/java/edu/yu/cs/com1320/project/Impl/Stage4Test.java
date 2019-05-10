@@ -14,7 +14,6 @@ public class Stage4Test {
         //Document Tests//
 
         DocumentStoreImpl mystore = new DocumentStoreImpl();
-        mystore.setMaxDocumentBytes(300);
 
         //////////////////////
         String str1 = "https://www.google.co.in/?gws_rd=ssl#"+""
@@ -103,8 +102,36 @@ public class Stage4Test {
         int code7 = mystore.putDocument(in7, uri7, DocumentStore.CompressionFormat.GZIP);
         String doc7 = mystore.getDocument(uri7);
 
+        mystore.printdocStore();
+        System.out.println();
+
+        String source8 = "String 8";
+        ByteArrayInputStream in8 = new ByteArrayInputStream(source8.getBytes(StandardCharsets.UTF_8));
+
+        int code8 = mystore.putDocument(in8, uri7, DocumentStore.CompressionFormat.GZIP);
+        String doc8 = mystore.getDocument(uri7);
+
 
         mystore.printdocStore();
+        System.out.println();
+
+        mystore.undo();
+        mystore.printdocStore();
+        System.out.println();
+
+        mystore.undo();
+        mystore.printdocStore();
+        System.out.println();
+
+
+
+
+
+
+
+
+
+
 
     }
 

@@ -167,12 +167,10 @@ public class DocumentStoreImpl implements DocumentStore {
             }
             byte[] bytes = IOUtils.toByteArray(input);
             String docString = new String(bytes);
-            if (store.get(uri) != null) {
-                if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
-                    store.get(uri).setLastUseTime(System.currentTimeMillis()); ///time stamp
-                    this.docHeap.reHeapify(store.get(uri));
-                    return docString.hashCode();
-                }
+            if ((store.get(uri) != null) && (store.get(uri).getDocumentHashCode() == docString.hashCode())) {
+                store.get(uri).setLastUseTime(System.currentTimeMillis()); ///time stamp
+                this.docHeap.reHeapify(store.get(uri));
+                return docString.hashCode();
             }
             else {
                 this.compressionSwitch(format, docString, uri);
@@ -322,14 +320,12 @@ public class DocumentStoreImpl implements DocumentStore {
             if (c.equals(this.defaultCompressionFormat)) {
                 this.putDocumentUndoVersion(string, uri1);
                 this.addWords(this.store.get(uri1));
-                this.store.get(uri1).setLastUseTime(System.currentTimeMillis());  ///time stamp
                 this.docHeap.insert(this.store.get(uri1));
                 this.totalBytes += this.store.get(uri1).getDocument().length;
                 return true;
             } else {
                 this.putDocumentUndoVersion(string, uri1, c);
                 this.addWords(this.store.get(uri1));
-                this.store.get(uri1).setLastUseTime(System.currentTimeMillis());  ///time stamp
                 this.docHeap.insert(this.store.get(uri1));
                 this.totalBytes += this.store.get(uri1).getDocument().length;
                 return true;
@@ -389,10 +385,16 @@ public class DocumentStoreImpl implements DocumentStore {
 
     public void setMaxDocumentCount(int limit) {
         this.maxDocCount = limit;
+        if (this.store.getN() > limit) {
+            this.makeSpace();
+        }
     }
 
     public void setMaxDocumentBytes(int limit) {
         this.maxDocBytes = limit;
+        if (this.totalBytes > limit) {
+            this.makeSpace();
+        }
     }
 
     ////////// Compression ///////////
@@ -513,25 +515,79 @@ public class DocumentStoreImpl implements DocumentStore {
     ////////// Creation /////////////
 
     protected void createDocument(String s, byte[] compressedbytes, URI uri, CompressionFormat format) {
-        DocumentImpl document = new DocumentImpl(uri, format, s, compressedbytes);
+        DocumentImpl document = new DocumentImpl(uri, format, s, compressedbytes);  ///create document
         document.setLastUseTime(System.currentTimeMillis());  ///time stamp
         if (store.get(uri) != null) {
-            this.totalBytes -= store.get(uri).getDocument().length;   ///Take away replaced doc's bytes from total
+            this.totalBytes -= store.get(uri).getDocument().length;   ///Take away ejected doc's bytes from total
         }
-        store.put(uri, document);
+        DocumentImpl putDoc = store.put(uri, document);
         this.addWords(document);
         this.docHeap.insert(document);
         this.totalBytes += document.getDocument().length;
+        if (document.getDocument().length > this.totalBytes) {
+            throw new IllegalArgumentException();
+        }
         if ((store.getN() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
             this.makeSpace();
         }
-        Function putUndo = this.putUndoFunction();
-        Function putRedo = this.putRedoFunction(format, s);
-        Command putCommand = new Command(uri, putUndo, putRedo);
-        this.commandStack.push(putCommand);
+        if (putDoc == null) {
+            Function putUndo = this.putUndoFunction();
+            Function putRedo = this.putRedoFunction(format, s);
+            Command putCommand = new Command(uri, putUndo, putRedo);
+            this.commandStack.push(putCommand);
+        }
+        else {
+            Function updatedPutUndo = this.updatedPutUndoFunction(putDoc.getCompressionFormat(), putDoc.toString());
+            Function updatedPutRedo = this.updatedPutRedoFunction(format, s);
+            Command updatedPutCommand = new Command(uri, updatedPutUndo, updatedPutRedo);
+            this.commandStack.push(updatedPutCommand);
+        }
     }
 
-    protected Function<URI, Boolean> putUndoFunction() {
+    private Function<URI, Boolean> updatedPutUndoFunction(CompressionFormat c, String string) {
+        Function<URI, Boolean> updatedPutUndo = (uri1) -> {
+            this.deleteWords(uri1);
+            this.docHeap.delete(store.get(uri1));
+            this.totalBytes -= store.get(uri1).getDocument().length;
+            this.deleteDocumentUndoVersion(uri1);
+            if (c.equals(this.defaultCompressionFormat)) {
+                this.putDocumentUndoVersion(string, uri1);
+                this.addWords(this.store.get(uri1));
+                this.docHeap.insert(this.store.get(uri1));
+                this.totalBytes += this.store.get(uri1).getDocument().length;
+                return true;
+            } else {
+                this.putDocumentUndoVersion(string, uri1, c);
+                this.addWords(this.store.get(uri1));
+                this.docHeap.insert(this.store.get(uri1));
+                this.totalBytes += this.store.get(uri1).getDocument().length;
+                return true;
+            }
+        };
+        return updatedPutUndo;
+    }
+
+    private Function<URI, Boolean> updatedPutRedoFunction(CompressionFormat format, String s) {
+        Function<URI, Boolean> updatedPutRedo = (uri2) -> {
+            if (format.equals(this.defaultCompressionFormat)) {
+                this.putDocumentUndoVersion(s, uri2);
+                this.addWords(this.store.get(uri2));
+                this.docHeap.insert(store.get(uri2));
+                this.totalBytes += store.get(uri2).getDocument().length;
+                return true;
+            }
+            else {
+                this.putDocumentUndoVersion(s, uri2, format);
+                this.addWords(this.store.get(uri2));
+                this.docHeap.insert(store.get(uri2));
+                this.totalBytes += store.get(uri2).getDocument().length;
+                return true;
+            }
+        };
+        return updatedPutRedo;
+    }
+
+    private Function<URI, Boolean> putUndoFunction() {
         Function<URI, Boolean> putUndo = (uri1) -> {
             this.deleteWords(uri1);
             this.docHeap.delete(store.get(uri1));
@@ -542,7 +598,7 @@ public class DocumentStoreImpl implements DocumentStore {
         return putUndo;
     }
 
-    protected Function<URI, Boolean> putRedoFunction(CompressionFormat format, String s) {
+    private Function<URI, Boolean> putRedoFunction(CompressionFormat format, String s) {
         Function<URI, Boolean> putRedo = (uri2) -> {
             if (format.equals(this.defaultCompressionFormat)) {
                 this.putDocumentUndoVersion(s, uri2);
@@ -565,6 +621,9 @@ public class DocumentStoreImpl implements DocumentStore {
     protected void createDocumentUndoVerion(String s, byte[] compressedbytes, URI uri, CompressionFormat format) {
         DocumentImpl document = new DocumentImpl(uri, format, s, compressedbytes);
         store.put(uri, document);
+        if ((store.getN() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+            this.makeSpace();
+        }
         store.get(uri).setLastUseTime(System.currentTimeMillis());
     }
 
@@ -689,14 +748,35 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     /**
-     * deletes a document in a fashion which gets it out of all memory and doesn't create a command instance
+     * deletes a document in a fashion which gets it out of all memory
      * @param doc the document being deleted
      */
     protected void deleteDocumentMaxVersion (DocumentImpl doc) {
         URI uri = doc.getKey();
         this.deleteWords(uri);
         this.totalBytes -= store.get(uri).getDocument().length;
+        this.removeFromStack(uri);
         store.deleteObject(uri);
+    }
+
+    private void removeFromStack(URI uri) {
+        int stackMax = commandStack.getMax();
+        StackImpl temp = new StackImpl(stackMax);   ///Create temp stack to hold the taken out commands
+        Command current = (Command) commandStack.peek();
+        while (commandStack.size() != 0) {     ///remove all elements and store desired elements in temp stack
+            if (current.getUri().equals(uri)) {
+                commandStack.pop();
+            }
+            else {
+                Command thisCommand = (Command) commandStack.pop();
+                temp.push(thisCommand);
+            }
+            current = (Command) commandStack.peek();
+        }
+        while (temp.size() > 0) {
+            Command thatCommand = (Command) temp.pop();
+            commandStack.push(thatCommand);
+        }
     }
 
     protected void printdocStore() {

@@ -139,15 +139,10 @@ public class HashTableImpl<Key, Value> implements HashTable<Key, Value> {
             Node current = (Node) table[i];
             if (current != null) {
                 System.out.print(current.toString());
-            }
-            else {
-                System.out.print(current);
-            }
-            if (current != null) {
                 current = current.next;
             }
             else {
-                System.out.println();
+                System.out.println(current);
                 continue;
             }
             while (current != null) {
