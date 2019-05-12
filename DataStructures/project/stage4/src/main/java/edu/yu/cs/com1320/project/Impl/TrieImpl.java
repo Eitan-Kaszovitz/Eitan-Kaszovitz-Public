@@ -29,7 +29,6 @@ public class TrieImpl<Value> implements Trie<Value> {
         }
         protected Node(Value v) {
             valList = new ArrayList<>();
-            valList.add(v);
             links = new Node[alphabetSize];
             for (int i = 0; i < links.length; i++) {
                 links[i] = null;

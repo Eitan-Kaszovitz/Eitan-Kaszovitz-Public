@@ -289,6 +289,27 @@ public class DocumentStoreImpl implements DocumentStore {
         return null;
     }
 
+    public String getDocumentNoTimeStamp(URI uri) {
+        if (store.get(uri) != null) {
+            switch (store.get(uri).getCompressionFormat()) {
+                case JAR:
+                    return this.decompressJar(store.get(uri).getDocument());
+                case ZIP:
+                    return this.decompressZip(store.get(uri).getDocument());
+                case GZIP:
+                    return this.decompressGzip(store.get(uri).getDocument());
+                case SEVENZ:
+                    return this.decompressSevenz(store.get(uri).getDocument());
+                case BZIP2:
+                    return this.decompressBzip2(store.get(uri).getDocument());
+            }
+        }
+        else {
+            return null;
+        }
+        return null;
+    }
+
 
 
     public byte[] getCompressedDocument(URI uri) {
@@ -298,13 +319,14 @@ public class DocumentStoreImpl implements DocumentStore {
     }
 
     public boolean deleteDocument(URI uri) {
-        if (store.get(uri).equals(null)) {
+        if (store.get(uri) == null) {
             return false;
         }
         else {           //creates command object if delete is successful
-            String s = getDocument(uri);
+            String s = getDocumentNoTimeStamp(uri);
             CompressionFormat format = store.get(uri).getCompressionFormat();
-            Function deleteUndo = this.deleteUndoFunction(format, s);
+            Long putTime = store.get(uri).getLastUseTime();
+            Function deleteUndo = this.deleteUndoFunction(format, s, putTime);
             Function deleteRedo = this.deleteRedoFunction();
             Command putCommand = new Command(uri, deleteUndo, deleteRedo);
             this.commandStack.push(putCommand);
@@ -316,16 +338,18 @@ public class DocumentStoreImpl implements DocumentStore {
         return isDeleted;
     }
 
-    protected Function<URI, Boolean> deleteUndoFunction(CompressionFormat c, String string) {
+    protected Function<URI, Boolean> deleteUndoFunction(CompressionFormat c, String string, Long putTime) {
         Function<URI, Boolean> deleteUndo = (uri1) -> {
             if (c.equals(this.defaultCompressionFormat)) {
                 this.putDocumentUndoVersion(string, uri1);
+                this.store.get(uri1).setLastUseTime(putTime);
                 this.addWords(this.store.get(uri1));
                 this.docHeap.insert(this.store.get(uri1));
                 this.totalBytes += this.store.get(uri1).getDocument().length;
                 return true;
             } else {
                 this.putDocumentUndoVersion(string, uri1, c);
+                this.store.get(uri1).setLastUseTime(putTime);
                 this.addWords(this.store.get(uri1));
                 this.docHeap.insert(this.store.get(uri1));
                 this.totalBytes += this.store.get(uri1).getDocument().length;
@@ -540,14 +564,14 @@ public class DocumentStoreImpl implements DocumentStore {
             this.commandStack.push(putCommand);
         }
         else {
-            Function updatedPutUndo = this.updatedPutUndoFunction(putDoc.getCompressionFormat(), putDoc.toString());
+            Function updatedPutUndo = this.updatedPutUndoFunction(putDoc.getCompressionFormat(), putDoc.toString(), putDoc.getLastUseTime());
             Function updatedPutRedo = this.updatedPutRedoFunction(format, s);
             Command updatedPutCommand = new Command(uri, updatedPutUndo, updatedPutRedo);
             this.commandStack.push(updatedPutCommand);
         }
     }
 
-    private Function<URI, Boolean> updatedPutUndoFunction(CompressionFormat c, String string) {
+    private Function<URI, Boolean> updatedPutUndoFunction(CompressionFormat c, String string, Long putTime) {
         Function<URI, Boolean> updatedPutUndo = (uri1) -> {
             this.deleteWords(uri1);
             this.docHeap.delete(store.get(uri1));
@@ -555,6 +579,7 @@ public class DocumentStoreImpl implements DocumentStore {
             this.deleteDocumentUndoVersion(uri1);
             if (c.equals(this.defaultCompressionFormat)) {
                 this.putDocumentUndoVersion(string, uri1);
+                this.store.get(uri1).setLastUseTime(putTime);
                 this.addWords(this.store.get(uri1));
                 this.docHeap.insert(this.store.get(uri1));
                 this.totalBytes += this.store.get(uri1).getDocument().length;
@@ -562,6 +587,7 @@ public class DocumentStoreImpl implements DocumentStore {
             } else {
                 this.putDocumentUndoVersion(string, uri1, c);
                 this.addWords(this.store.get(uri1));
+                this.store.get(uri1).setLastUseTime(putTime);
                 this.docHeap.insert(this.store.get(uri1));
                 this.totalBytes += this.store.get(uri1).getDocument().length;
                 return true;
