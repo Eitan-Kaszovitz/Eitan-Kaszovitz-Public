@@ -116,8 +116,9 @@ public class DocumentStoreImpl implements DocumentStore {
         //if word has docs with it, get a list of those docs' compressed forms
         else {
             List<byte[]> compressedDocList = new ArrayList<>();
+            long timeUpdate = System.currentTimeMillis();
             for (DocumentImpl current : docList) {
-                current.setLastUseTime(System.currentTimeMillis());  ///time stamp
+                current.setLastUseTime(timeUpdate);  ///time stamp
                 this.docHeap.reHeapify(current);
                 compressedDocList.add(current.getDocument());
             }
@@ -519,12 +520,14 @@ public class DocumentStoreImpl implements DocumentStore {
         document.setLastUseTime(System.currentTimeMillis());  ///time stamp
         if (store.get(uri) != null) {
             this.totalBytes -= store.get(uri).getDocument().length;   ///Take away ejected doc's bytes from total
+            this.deleteWords(uri);
+            this.docHeap.delete(store.get(uri));
         }
         DocumentImpl putDoc = store.put(uri, document);
         this.addWords(document);
         this.docHeap.insert(document);
         this.totalBytes += document.getDocument().length;
-        if (document.getDocument().length > this.totalBytes) {
+        if (document.getDocument().length > this.maxDocBytes) {
             throw new IllegalArgumentException();
         }
         if ((store.getN() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
@@ -754,6 +757,7 @@ public class DocumentStoreImpl implements DocumentStore {
     protected void deleteDocumentMaxVersion (DocumentImpl doc) {
         URI uri = doc.getKey();
         this.deleteWords(uri);
+        this.docHeap.delete(doc);
         this.totalBytes -= store.get(uri).getDocument().length;
         this.removeFromStack(uri);
         store.deleteObject(uri);

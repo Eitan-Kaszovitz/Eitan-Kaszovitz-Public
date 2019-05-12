@@ -22,7 +22,7 @@ public class DocumentImpl implements Document {
         this.docHashcode = s.hashCode();
         this.compressedDoc = b;
         this.string = s;
-        this.wordList = s.replaceAll("[^a-zA-Z\\s]", "").toLowerCase().split(" ");
+        this.wordList = s.replaceAll("[^a-zA-Z\\s]", "").toLowerCase().split("\\s+");
         this.wordCountTable = new HashTableImpl(50);
         this.createWordTable();
         this.lastUsedTime = 0;

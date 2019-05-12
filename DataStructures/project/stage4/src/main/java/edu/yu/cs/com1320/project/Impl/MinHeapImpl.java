@@ -88,6 +88,7 @@ public class MinHeapImpl extends MinHeap<Comparable> {
         this.elementsToArrayIndex.put(this.elements[j], j);
     }
 
+
     protected void delete(Comparable element) {
         if (isEmpty())
         {
@@ -101,4 +102,5 @@ public class MinHeapImpl extends MinHeap<Comparable> {
         this.reHeapify(newElement);
         this.elements[this.count + 1] = null; //null it to prepare for GC
     }
+
 }
