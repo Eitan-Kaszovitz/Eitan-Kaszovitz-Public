@@ -14,6 +14,8 @@ public class Stage4Test {
         //Document Tests//
 
         DocumentStoreImpl mystore = new DocumentStoreImpl();
+        mystore.setMaxDocumentCount(2);
+
 
         //////////////////////
         String str1 = "https://www.google.co.in/?gws_rd=ssl#"+""
@@ -48,7 +50,6 @@ public class Stage4Test {
         int code3 = mystore.putDocument(in3, uri3, DocumentStore.CompressionFormat.SEVENZ);
 
 
-
         String str4 = "https://www.google.co.in/?gws_rd=ssl#"+""
                 + "q=networking+in+java+geeksforgeeks"+""
                 +"&spf=149691805767674683";
@@ -58,7 +59,10 @@ public class Stage4Test {
 
         int code4 = mystore.putDocument(in4, uri4, DocumentStore.CompressionFormat.BZIP2);
 
+        mystore.printdocStore();
 
+
+        /*
         String str5 = "https://www.google.co.in/?gws_rd=ssl#"+""
                 + "q=networewewng+in+java+geeksforgeeks"+""
                 +"&spf=149691805767674683";
@@ -68,33 +72,8 @@ public class Stage4Test {
 
         int code5 = mystore.putDocument(in5, uri5, DocumentStore.CompressionFormat.BZIP2);
 
-        mystore.printdocStore();
-        System.out.println();
 
-        System.out.println(mystore.search("apples"));
-        System.out.println("hi");
-
-        System.out.println(mystore.search("message"));
-        System.out.println("hi");
-
-
-        mystore.getDocument(uri2);
-        System.out.println("hi");
-
-        mystore.getDocument(uri1);
-        System.out.println("hi");
-
-        mystore.getDocument(uri5);
-        System.out.println("hi");
-
-        mystore.getDocument(uri3);
-        System.out.println("hi");
-
-
-        mystore.setMaxDocumentCount(4);
-        mystore.printdocStore();
-
-        /*String str6 = "https://www.google.co.in/?gws_rd=ssl#"+""
+        String str6 = "https://www.google.co.in/?gws_rd=ssl#"+""
                 + "q=netwong+in+java+geeksforgeeks"+""
                 +"&spf=149691805767674683";
         URI uri6 = URI.create(str6);
@@ -104,6 +83,7 @@ public class Stage4Test {
         int code6 = mystore.putDocument(in6, uri6, DocumentStore.CompressionFormat.JAR);
 
 
+        /*
         String str7 = "https://www.google.co.in/?gws_rd=ssl#"+""
                 + "q=netwoeitanewng+in+java+geeksforgeeks"+""
                 +"&spf=149691805767674683";

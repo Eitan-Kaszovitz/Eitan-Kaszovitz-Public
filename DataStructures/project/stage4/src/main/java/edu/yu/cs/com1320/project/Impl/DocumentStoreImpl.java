@@ -783,7 +783,6 @@ public class DocumentStoreImpl implements DocumentStore {
     protected void deleteDocumentMaxVersion (DocumentImpl doc) {
         URI uri = doc.getKey();
         this.deleteWords(uri);
-        this.docHeap.delete(doc);
         this.totalBytes -= store.get(uri).getDocument().length;
         this.removeFromStack(uri);
         store.deleteObject(uri);
