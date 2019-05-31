@@ -115,6 +115,10 @@ public class DocumentStoreImpl implements DocumentStore {
                 this.store.get(current).setLastUseTime(timeUpdate); ///time stamp
                 if (this.store.get(current).getWasSerialized()) {
                     this.docHeap.insert(this.uriCompMap.get(current));
+                    this.totalBytes += store.get(current).getDocument().length;
+                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                        this.makeSpace();
+                    }
                     stringList.add(this.store.get(current).toString());
                 }
                 else {
@@ -145,6 +149,10 @@ public class DocumentStoreImpl implements DocumentStore {
                 this.store.get(current).setLastUseTime(timeUpdate);  ///time stamp
                 if (this.store.get(current).getWasSerialized()) {
                     this.docHeap.insert(this.uriCompMap.get(current));
+                    this.totalBytes += store.get(current).getDocument().length;
+                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                        this.makeSpace();
+                    }
                     compressedDocList.add(this.store.get(current).getDocument());
                 }
                 else {
@@ -176,6 +184,10 @@ public class DocumentStoreImpl implements DocumentStore {
             if (store.get(uri) != null) {
                 if (this.store.get(uri).getWasSerialized()) {
                     this.docHeap.insert(this.uriCompMap.get(uri));
+                    this.totalBytes += store.get(uri).getDocument().length;
+                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                        this.makeSpace();
+                    }
                 }
                 if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
                     store.get(uri).setLastUseTime(System.currentTimeMillis()); ///time stamp
@@ -205,6 +217,10 @@ public class DocumentStoreImpl implements DocumentStore {
                 store.get(uri).setLastUseTime(System.currentTimeMillis()); ///time stamp
                 if (this.store.get(uri).getWasSerialized()) {
                     this.docHeap.insert(this.uriCompMap.get(uri));
+                    this.totalBytes += store.get(uri).getDocument().length;
+                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                        this.makeSpace();
+                    }
                 }
                 this.docHeap.reHeapify(this.uriCompMap.get(uri));
                 return docString.hashCode();
@@ -306,6 +322,10 @@ public class DocumentStoreImpl implements DocumentStore {
         if (store.get(uri) != null) {
             if (this.store.get(uri).getWasSerialized()) {
                 this.docHeap.insert(this.uriCompMap.get(uri));
+                this.totalBytes += store.get(uri).getDocument().length;
+                if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                    this.makeSpace();
+                }
             }
             store.get(uri).setLastUseTime(System.currentTimeMillis());  ///time stamp
             this.docHeap.reHeapify(this.uriCompMap.get(uri));
@@ -332,6 +352,10 @@ public class DocumentStoreImpl implements DocumentStore {
         if (store.get(uri) != null) {
             if (this.store.get(uri).getWasSerialized()) {
                 this.docHeap.insert(this.uriCompMap.get(uri));
+                this.totalBytes += store.get(uri).getDocument().length;
+                if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                    this.makeSpace();
+                }
             }
             switch (store.get(uri).getCompressionFormat()) {
                 case JAR:
@@ -358,6 +382,10 @@ public class DocumentStoreImpl implements DocumentStore {
         store.get(uri).setLastUseTime(System.currentTimeMillis());  ///time stamp
         if (this.store.get(uri).getWasSerialized()) {
             this.docHeap.insert(this.uriCompMap.get(uri));
+            this.totalBytes += store.get(uri).getDocument().length;
+            if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+                this.makeSpace();
+            }
         }
         this.docHeap.reHeapify(this.uriCompMap.get(uri));
         return store.get(uri).getDocument();
@@ -367,7 +395,7 @@ public class DocumentStoreImpl implements DocumentStore {
         if (store.get(uri) == null) {
             return false;
         }
-        else {           //creates command object if delete is successful
+        if (!store.get(uri).getWasSerialized()) {
             String s = getDocumentNoTimeStamp(uri);
             CompressionFormat format = store.get(uri).getCompressionFormat();
             Long putTime = store.get(uri).getLastUseTime();
@@ -375,10 +403,19 @@ public class DocumentStoreImpl implements DocumentStore {
             Function deleteRedo = this.deleteRedoFunction();
             Command putCommand = new Command(uri, deleteUndo, deleteRedo);
             this.commandStack.push(putCommand);
+            this.totalBytes -= store.get(uri).getDocument().length;
+        }
+        if (store.get(uri).getWasSerialized()) {
+            String s = getDocumentNoTimeStamp(uri);
+            CompressionFormat format = store.get(uri).getCompressionFormat();
+            Long putTime = store.get(uri).getLastUseTime();
+            Function deleteUndo = this.deleteUndoFunctionForDisc(format, s, putTime);
+            Function deleteRedo = this.deleteRedoFunction();
+            Command putCommand = new Command(uri, deleteUndo, deleteRedo);
+            this.commandStack.push(putCommand);
         }
         this.deleteWords(uri);
         this.docHeap.delete(this.uriCompMap.get(uri));
-        this.totalBytes -= store.get(uri).getDocument().length;
         store.delete(uri);
         return true;
     }
@@ -402,6 +439,39 @@ public class DocumentStoreImpl implements DocumentStore {
                 this.docHeap.insert(uriComp);
                 this.uriCompMap.put(uri1, uriComp);
                 this.totalBytes += this.store.get(uri1).getDocument().length;
+                return true;
+            }
+        };
+        return deleteUndo;
+    }
+
+    protected Function<URI, Boolean> deleteUndoFunctionForDisc(CompressionFormat c, String string, Long putTime) {
+        Function<URI, Boolean> deleteUndo = (uri1) -> {
+            if (c.equals(this.defaultCompressionFormat)) {
+                this.putDocumentUndoVersion(string, uri1);
+                this.store.get(uri1).setLastUseTime(putTime);
+                this.addWords(this.store.get(uri1));
+                URIComp uriComp = new URIComp(uri1, this.store);
+                this.docHeap.insert(uriComp);
+                this.uriCompMap.put(uri1, uriComp);
+                try {
+                    this.store.moveToDisk(uri1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            } else {
+                this.putDocumentUndoVersion(string, uri1, c);
+                this.store.get(uri1).setLastUseTime(putTime);
+                this.addWords(this.store.get(uri1));
+                URIComp uriComp = new URIComp(uri1, this.store);
+                this.docHeap.insert(uriComp);
+                this.uriCompMap.put(uri1, uriComp);
+                try {
+                    this.store.moveToDisk(uri1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         };

@@ -17,6 +17,7 @@ public class Stage4Test {
         DocumentStoreImpl mystore = new DocumentStoreImpl();
         mystore.setMaxDocumentCount(2);
 
+
         //////////////////////
         String str1 = "folder/stuff";
         URI uri1 = URI.create(str1);
@@ -43,19 +44,24 @@ public class Stage4Test {
         int code3 = mystore.putDocument(in3, uri3, DocumentStore.CompressionFormat.SEVENZ);
 
 
-        String str4 = "folder4/morethings";
+        String str4 = "http://folder4/morethings";
         URI uri4 = URI.create(str4);
         String source4 = "String 4- Apples taste sour, so apples are bad.";
         ByteArrayInputStream in4 = new ByteArrayInputStream(source4.getBytes(StandardCharsets.UTF_8));
 
         int code4 = mystore.putDocument(in4, uri4, DocumentStore.CompressionFormat.BZIP2);
 
-        mystore.printdocStore();
-        System.out.println();
-
-        mystore.getDocument(uri2);
+        mystore.deleteDocument(uri1);
 
         mystore.printdocStore();
+
+
+
+
+
+
+
+
 
 
 
