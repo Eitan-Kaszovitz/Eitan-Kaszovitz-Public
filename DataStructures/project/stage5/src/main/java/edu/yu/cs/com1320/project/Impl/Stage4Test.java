@@ -15,8 +15,7 @@ public class Stage4Test {
         //Document Tests//
 
         DocumentStoreImpl mystore = new DocumentStoreImpl();
-        mystore.setMaxDocumentCount(2);
-
+        mystore.setMaxDocumentCount(3);
 
         //////////////////////
         String str1 = "folder/stuff";
@@ -51,10 +50,16 @@ public class Stage4Test {
 
         int code4 = mystore.putDocument(in4, uri4, DocumentStore.CompressionFormat.BZIP2);
 
-        mystore.deleteDocument(uri1);
+        String source5 = "String 1 new";
+        ByteArrayInputStream in5 = new ByteArrayInputStream(source5.getBytes(StandardCharsets.UTF_8));
+
+        int code5 = mystore.putDocument(in5, uri1, DocumentStore.CompressionFormat.GZIP);
 
         mystore.printdocStore();
+        System.out.println();
 
+        mystore.undo();
+        mystore.printdocStore();
 
 
 

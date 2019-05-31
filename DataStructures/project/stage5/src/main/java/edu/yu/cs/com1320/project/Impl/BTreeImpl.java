@@ -165,7 +165,7 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
                 DocumentImpl doc = (DocumentImpl) this.docSer.deserialize((URI)key);
                 entry.val = doc;
                 entry.isFile = false;
-                doc.setWasSerialized();
+                doc.setWasSerialized(true);
                 this.n++;
                 return (Value) doc;
             }
@@ -233,8 +233,9 @@ public class BTreeImpl<Key extends Comparable<Key>, Value> implements BTree<Key,
         //if the key already exists in the b-tree, simply replace the value
         Entry alreadyThere = this.get(this.root, key, this.height);
         if (alreadyThere != null) {
+            Value oldVal = (Value) alreadyThere.val;
             alreadyThere.val = val;
-            return val;
+            return oldVal;
         }
 
         Node newNode = this.put(this.root, key, val, this.height);

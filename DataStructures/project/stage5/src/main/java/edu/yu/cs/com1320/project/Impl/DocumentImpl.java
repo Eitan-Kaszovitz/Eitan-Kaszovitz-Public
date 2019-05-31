@@ -77,8 +77,8 @@ public class DocumentImpl implements Document {
         return this.wasSerialized;
     }
 
-    protected void setWasSerialized(){
-        this.wasSerialized = true;
+    protected void setWasSerialized(Boolean b){
+        this.wasSerialized = b;
     }
 
     public void setLastUseTime(long timeInMilliseconds) {

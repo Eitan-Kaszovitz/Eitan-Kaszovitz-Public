@@ -50,8 +50,8 @@ public class DocDeserializer implements JsonDeserializer<DocumentImpl> {
     }
 
 
-    /* I understand that this might not have been lechatchilah to begin with, but since stage 1, my docimpl has taken the string content
-    in the constructor as a parameter, and I had a lot of logic in the docimpl utilizing the string. Being that I never lost
+    /* I understand that this might not have been lechatchilah to begin with, but since stage 1, my docimpl has taken the doc string
+    content in the constructor as a parameter, and I had a lot of logic in the docimpl utilizing that string. Being that I never lost
     points for that throughout all four stages, I assume it's ok to continue with it for this stage. Therefore I need to decompress
     here in order to get the string for my new docimpl object. Additionally, my deserializing doesn't require a hashmap or
     the hashcode, because it is done internally within the docimpl object using the provided string.

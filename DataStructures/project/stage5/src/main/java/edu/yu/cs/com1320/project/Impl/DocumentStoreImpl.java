@@ -416,6 +416,7 @@ public class DocumentStoreImpl implements DocumentStore {
         }
         this.deleteWords(uri);
         this.docHeap.delete(this.uriCompMap.get(uri));
+        this.uriCompMap.remove(uri);
         store.delete(uri);
         return true;
     }
@@ -686,11 +687,83 @@ public class DocumentStoreImpl implements DocumentStore {
             this.commandStack.push(putCommand);
         }
         else {
-            Function updatedPutUndo = this.updatedPutUndoFunction(putDoc.getCompressionFormat(), putDoc.toString(), putDoc.getLastUseTime());
-            Function updatedPutRedo = this.updatedPutRedoFunction(format, s);
-            Command updatedPutCommand = new Command(uri, updatedPutUndo, updatedPutRedo);
-            this.commandStack.push(updatedPutCommand);
+            if (!putDoc.getWasSerialized()) {
+                Function updatedPutUndo = this.updatedPutUndoFunction(putDoc.getCompressionFormat(), putDoc.toString(), putDoc.getLastUseTime());
+                Function updatedPutRedo = this.updatedPutRedoFunction(format, s);
+                Command updatedPutCommand = new Command(uri, updatedPutUndo, updatedPutRedo);
+                this.commandStack.push(updatedPutCommand);
+            }
+            if (putDoc.getWasSerialized()) {
+                Function updatedPutUndoForDisc = this.updatedPutUndoFunctionForDisc(putDoc.getCompressionFormat(), putDoc.toString(), putDoc.getLastUseTime());
+                Function updatedPutRedoForDisc = this.updatedPutRedoFunctionForDisc(format, s);
+                Command updatedPutCommandForDisc = new Command(uri, updatedPutUndoForDisc, updatedPutRedoForDisc);
+                this.commandStack.push(updatedPutCommandForDisc);
+            }
         }
+    }
+
+    private Function<URI, Boolean> updatedPutUndoFunctionForDisc(CompressionFormat c, String string, Long putTime) {
+        Function<URI, Boolean> updatedPutUndo = (uri1) -> {
+            this.deleteWords(uri1);
+            this.docHeap.delete(this.uriCompMap.get(uri1));
+            this.uriCompMap.remove(uri1);
+            this.totalBytes -= store.get(uri1).getDocument().length;
+            this.deleteDocumentUndoVersion(uri1);
+            if (c.equals(this.defaultCompressionFormat)) {
+                this.putDocumentUndoVersion(string, uri1);
+                this.store.get(uri1).setLastUseTime(putTime);
+                this.addWords(this.store.get(uri1));
+                URIComp uriComp = new URIComp(uri1, this.store);
+                this.docHeap.insert(uriComp);
+                this.uriCompMap.put(uri1, uriComp);
+                this.totalBytes += this.store.get(uri1).getDocument().length;
+                try {
+                    this.store.moveToDisk(uri1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            } else {
+                this.putDocumentUndoVersion(string, uri1, c);
+                this.addWords(this.store.get(uri1));
+                this.store.get(uri1).setLastUseTime(putTime);
+                URIComp uriComp = new URIComp(uri1, this.store);
+                this.docHeap.insert(uriComp);
+                this.uriCompMap.put(uri1, uriComp);
+                this.totalBytes += this.store.get(uri1).getDocument().length;
+                try {
+                    this.store.moveToDisk(uri1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        };
+        return updatedPutUndo;
+    }
+
+    private Function<URI, Boolean> updatedPutRedoFunctionForDisc(CompressionFormat format, String s) {
+        Function<URI, Boolean> updatedPutRedo = (uri2) -> {
+            if (format.equals(this.defaultCompressionFormat)) {
+                this.putDocumentUndoVersion(s, uri2);
+                this.addWords(this.store.get(uri2));
+                URIComp uriComp = new URIComp(uri2, this.store);
+                this.docHeap.insert(uriComp);
+                this.uriCompMap.put(uri2, uriComp);
+                this.totalBytes += store.get(uri2).getDocument().length;
+                return true;
+            }
+            else {
+                this.putDocumentUndoVersion(s, uri2, format);
+                this.addWords(this.store.get(uri2));
+                URIComp uriComp = new URIComp(uri2, this.store);
+                this.docHeap.insert(uriComp);
+                this.uriCompMap.put(uri2, uriComp);
+                this.totalBytes += store.get(uri2).getDocument().length;
+                return true;
+            }
+        };
+        return updatedPutRedo;
     }
 
     private Function<URI, Boolean> updatedPutUndoFunction(CompressionFormat c, String string, Long putTime) {
