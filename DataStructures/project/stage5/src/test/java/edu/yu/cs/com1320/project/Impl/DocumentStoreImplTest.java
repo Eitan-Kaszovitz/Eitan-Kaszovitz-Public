@@ -52,20 +52,31 @@ public class DocumentStoreImplTest {
     int code4 = mystore.putDocument(in4, uri4, DocumentStore.CompressionFormat.BZIP2);
 
 
+
     @Test
     public void test1() {
-        mystore.setMaxDocumentCount(2);
         assertEquals(mystore.getDocument(uri1), "String 1");
     }
 
     @Test
     public void test2() {
+        assertEquals(mystore.getDocument(uri2), "String 2");
+    }
+
+    @Test
+    public void test3() {
+        mystore.setMaxDocumentCount(2);
+        assertEquals(mystore.getDocument(uri1), "String 1");
+    }
+
+    @Test
+    public void test4() {
         mystore.setMaxDocumentCount(3);
         assertEquals(mystore.getDocument(uri4), "String 4- Apples taste sour, so apples are bad.");
     }
 
     @Test
-    public void test3() {
+    public void test5() {
         mystore.getDocument(uri1);
         mystore.getDocument(uri2);
         mystore.getDocument(uri3);
