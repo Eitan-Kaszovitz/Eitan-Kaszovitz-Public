@@ -114,17 +114,12 @@ public class DocumentStoreImpl implements DocumentStore {
             for (URI current : docList) {
                 this.store.get(current).setLastUseTime(timeUpdate); ///time stamp
                 if (this.store.get(current).getWasSerialized()) {
-                    this.docHeap.insert(this.uriCompMap.get(current));
-                    this.totalBytes += store.get(current).getDocument().length;
-                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                        this.makeSpace();
-                    }
-                    stringList.add(this.store.get(current).toString());
+                    this.backFromDisc(current);
                 }
                 else {
                     this.docHeap.reHeapify(this.uriCompMap.get(current));
-                    stringList.add(this.store.get(current).toString());
                 }
+                    stringList.add(this.store.get(current).toString());
             }
             return stringList;
         }
@@ -148,17 +143,12 @@ public class DocumentStoreImpl implements DocumentStore {
             for (URI current : docList) {
                 this.store.get(current).setLastUseTime(timeUpdate);  ///time stamp
                 if (this.store.get(current).getWasSerialized()) {
-                    this.docHeap.insert(this.uriCompMap.get(current));
-                    this.totalBytes += store.get(current).getDocument().length;
-                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                        this.makeSpace();
-                    }
-                    compressedDocList.add(this.store.get(current).getDocument());
+                    this.backFromDisc(current);
                 }
                 else {
                     this.docHeap.reHeapify(this.uriCompMap.get(current));
-                    compressedDocList.add(this.store.get(current).getDocument());
                 }
+                    compressedDocList.add(this.store.get(current).getDocument());
             }
             return compressedDocList;
         }
@@ -183,11 +173,8 @@ public class DocumentStoreImpl implements DocumentStore {
             String docString = new String(bytes);
             if (store.get(uri) != null) {
                 if (this.store.get(uri).getWasSerialized()) {
-                    this.docHeap.insert(this.uriCompMap.get(uri));
-                    this.totalBytes += store.get(uri).getDocument().length;
-                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                        this.makeSpace();
-                    }
+                    this.backFromDisc(uri);
+                    store.get(uri).setWasSerialized(true);
                 }
                 if (store.get(uri).getDocumentHashCode() == docString.hashCode()) {
                     store.get(uri).setLastUseTime(System.currentTimeMillis()); ///time stamp
@@ -216,11 +203,8 @@ public class DocumentStoreImpl implements DocumentStore {
             if ((store.get(uri) != null) && (store.get(uri).getDocumentHashCode() == docString.hashCode())) {
                 store.get(uri).setLastUseTime(System.currentTimeMillis()); ///time stamp
                 if (this.store.get(uri).getWasSerialized()) {
-                    this.docHeap.insert(this.uriCompMap.get(uri));
-                    this.totalBytes += store.get(uri).getDocument().length;
-                    if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                        this.makeSpace();
-                    }
+                    this.backFromDisc(uri);
+                    store.get(uri).setWasSerialized(true);
                 }
                 this.docHeap.reHeapify(this.uriCompMap.get(uri));
                 return docString.hashCode();
@@ -321,11 +305,7 @@ public class DocumentStoreImpl implements DocumentStore {
     public String getDocument(URI uri) {
         if (store.get(uri) != null) {
             if (this.store.get(uri).getWasSerialized()) {
-                this.docHeap.insert(this.uriCompMap.get(uri));
-                this.totalBytes += store.get(uri).getDocument().length;
-                if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                    this.makeSpace();
-                }
+                this.backFromDisc(uri);
             }
             store.get(uri).setLastUseTime(System.currentTimeMillis());  ///time stamp
             this.docHeap.reHeapify(this.uriCompMap.get(uri));
@@ -351,11 +331,7 @@ public class DocumentStoreImpl implements DocumentStore {
     public String getDocumentNoTimeStamp(URI uri) {
         if (store.get(uri) != null) {
             if (this.store.get(uri).getWasSerialized()) {
-                this.docHeap.insert(this.uriCompMap.get(uri));
-                this.totalBytes += store.get(uri).getDocument().length;
-                if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                    this.makeSpace();
-                }
+                this.backFromDisc(uri);
             }
             switch (store.get(uri).getCompressionFormat()) {
                 case JAR:
@@ -381,11 +357,7 @@ public class DocumentStoreImpl implements DocumentStore {
     public byte[] getCompressedDocument(URI uri) {
         store.get(uri).setLastUseTime(System.currentTimeMillis());  ///time stamp
         if (this.store.get(uri).getWasSerialized()) {
-            this.docHeap.insert(this.uriCompMap.get(uri));
-            this.totalBytes += store.get(uri).getDocument().length;
-            if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
-                this.makeSpace();
-            }
+            this.backFromDisc(uri);
         }
         this.docHeap.reHeapify(this.uriCompMap.get(uri));
         return store.get(uri).getDocument();
@@ -1015,6 +987,15 @@ public class DocumentStoreImpl implements DocumentStore {
             Command thatCommand = (Command) temp.pop();
             commandStack.push(thatCommand);
         }
+    }
+
+    protected void backFromDisc(URI uri) {
+        this.docHeap.insert(this.uriCompMap.get(uri));
+        this.totalBytes += store.get(uri).getDocument().length;
+        if ((store.size() > this.maxDocCount) || (this.totalBytes > this.maxDocBytes)) {
+            this.makeSpace();
+        }
+        store.get(uri).setWasSerialized(false);
     }
 
     protected void printdocStore()

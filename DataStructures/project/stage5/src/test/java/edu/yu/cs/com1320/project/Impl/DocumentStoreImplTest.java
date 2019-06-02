@@ -89,6 +89,13 @@ public class DocumentStoreImplTest {
         assertEquals(mystore.search("Apples"), list);
     }
 
+    @Test
+    public void test6() {
+        mystore.undo(uri2);
+
+        assertEquals(mystore.getDocument(uri2), null);
+    }
+
 
 
 

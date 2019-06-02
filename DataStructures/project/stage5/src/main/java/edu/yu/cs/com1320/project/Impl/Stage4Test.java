@@ -12,10 +12,11 @@ public class Stage4Test {
 
     public static void main (String[] args) {
 
+        File base = new File("/Users/eitankaszovitz/MYGIT/KaszovitzEitan/DataStructures/project/stage4");
+
         //Document Tests//
 
-        DocumentStoreImpl mystore = new DocumentStoreImpl();
-        mystore.setMaxDocumentCount(3);
+        DocumentStoreImpl mystore = new DocumentStoreImpl(base);
 
         //////////////////////
         String str1 = "folder/stuff";
@@ -50,15 +51,8 @@ public class Stage4Test {
 
         int code4 = mystore.putDocument(in4, uri4, DocumentStore.CompressionFormat.BZIP2);
 
-        String source5 = "String 1 new";
-        ByteArrayInputStream in5 = new ByteArrayInputStream(source5.getBytes(StandardCharsets.UTF_8));
+        mystore.setMaxDocumentCount(3);
 
-        int code5 = mystore.putDocument(in5, uri1, DocumentStore.CompressionFormat.GZIP);
-
-        mystore.printdocStore();
-        System.out.println();
-
-        mystore.undo();
         mystore.printdocStore();
 
 
