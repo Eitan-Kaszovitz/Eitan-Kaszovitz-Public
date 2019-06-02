@@ -8,4 +8,4 @@ Stage 5 Assumptions - Eitan Kaszovitz
 
 4) If there’s an issue with deserializing - see comments in DocDeserializer.java
 
-5) Anytime btree.get(uri) is called from DSI, a json file is returned from disc to memory. 
+5) Anytime btree.get(uri) is called from DSI and it returns a json file, that json file is returned from disc to memory. 
