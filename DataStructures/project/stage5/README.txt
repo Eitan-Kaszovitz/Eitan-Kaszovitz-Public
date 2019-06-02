@@ -7,3 +7,5 @@ Stage 5 Assumptions - Eitan Kaszovitz
 3) When a doc is on disc and it’s deleted, undoing that delete will put it back on disc. Similarly, if a doc on disc is “ejected” because of a put with the same URI, then undoing that put will return the “ejected” doc to disc.
 
 4) If there’s an issue with deserializing - see comments in DocDeserializer.java
+
+5) Anytime btree.get(uri) is called from DSI, a json file is returned from disc to memory. 
