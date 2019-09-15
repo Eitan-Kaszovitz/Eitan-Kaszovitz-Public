@@ -1,0 +1,46 @@
+Grade for assignment [KaszovitzEitan]: 4/10
+
+tests pass for cdf, incorrect results for invert followed by a code hang
+
+
+Pulled files on Wed Sep 11 21:00:23 EDT 2019
+Latest commit of student files ....
+Latest commit of src/main/java/edu/yu/introtoalgs/TestClass.java was on: Wed Sep 11 15:12:05 2019
+Latest commit of src/main/java/edu/yu/introtoalgs/InvertAFunction.java was on: Wed Sep 11 15:12:05 2019
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/2545/KaszovitzEitan/IntroToAlgorithms/assignments/InvertAFunction
+Picked up JAVA_TOOL_OPTIONS: -Xms4096m -Xmx15G -XX:MaxMetaspaceSize=1G
+Picked up JAVA_TOOL_OPTIONS: -Xms4096m -Xmx15G -XX:MaxMetaspaceSize=1G
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Picked up JAVA_TOOL_OPTIONS: -Xms4096m -Xmx15G -XX:MaxMetaspaceSize=1G
+Test cases to execute : 1
+Running edu.yu.introtoalgs.test.TestInvertAFunction
+Execution Started : multipleInverseAndCDFTests
+
+First pass: code hangs
+Grade for assignment [KaszovitzEitan]: /10
+Pulled files on Sat Sep 14 22:06:45 EDT 2019
+Latest commit of student files ....
+Latest commit of src/main/java/edu/yu/introtoalgs/TestClass.java was on: Wed Sep 11 15:12:05 2019
+Latest commit of src/main/java/edu/yu/introtoalgs/InvertAFunction.java was on: Wed Sep 11 15:12:05 2019
+building Student KaszovitzEitan assignment code base from directory /Users/avraham/YUGitRepos/2545/KaszovitzEitan/IntroToAlgorithms/assignments/InvertAFunction
+Picked up JAVA_TOOL_OPTIONS: -Xms4096m -Xmx15G -XX:MaxMetaspaceSize=1G
+Picked up JAVA_TOOL_OPTIONS: -Xms4096m -Xmx15G -XX:MaxMetaspaceSize=1G
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Picked up JAVA_TOOL_OPTIONS: -Xms4096m -Xmx15G -XX:MaxMetaspaceSize=1G
+Test cases to execute : 1
+Running edu.yu.introtoalgs.test.TestInvertAFunction
+Execution Started : multipleInverseAndCDFTests
+[INFO ] 2019-09-14 22:06:48.727 [main] InvertAFunction multipleInverseAndCDFTests - Testing cdf for mean [1493.46] /stddev [1000.0] /z [300.0], expecting 0.95
+[INFO ] 2019-09-14 22:06:48.729 [main] InvertAFunction multipleInverseAndCDFTests - Testing cdf for mean [412.01] /stddev [1000.0] /z [300.0], expecting 0.025
+[INFO ] 2019-09-14 22:06:48.729 [main] InvertAFunction multipleInverseAndCDFTests - Testing cdf for mean [1587.99] /stddev [1000.0] /z [300.0], expecting 0.975
+[INFO ] 2019-09-14 22:06:48.729 [main] InvertAFunction multipleInverseAndCDFTests - Testing inverseGaussianCDF for y [0.95] /delta [1.0E-5] /mean [1000.0] /stddev [300.0], expecting 1493.46
+[INFO ] 2019-09-14 22:06:48.729 [main] InvertAFunction multipleInverseAndCDFTests - Testing inverseGaussianCDF for y [0.025] /delta [1.0E-5] /mean [1000.0] /stddev [300.0], expecting 412.01
+
+Results :
+
